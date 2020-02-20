@@ -2,9 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
-const profile = require('../../models/ProfileUpdate')
-
-const multer = require('multer');
+const profile = require('../../models/ProfileUpdate');
+const helper = require('../../models/helperFunctions');
 
 router.get('/test',(req, res) => res.json({msg:"Student Works"}));
 
@@ -72,6 +71,30 @@ router.post("/updateStudentEducation", async function(req,res){
             {
                 ...resp
             });
+    }
+});
+router.post('/updateStudentProfilePic',helper.upload.single('img'), async (req,res)=>{
+    console.log("In Update student profile picture");
+    console.log(req.body);
+    let student_id = req.body.id;
+    let role = 'student';
+    let resp ={};
+    try{
+        console.log("filename", req.file);
+        let profile_pic = req.file.filename;
+        resp = await profile.updateProfilePic(role,profile_pic,student_id);
+        if (resp.status) {
+            console.log("Pic uploaded");
+          }
+    }
+    catch (e) {
+        resp.status = false;
+        resp.message = "Unexpected error at server side! Please login and try again!!";
+        console.log(e);
+    }finally{
+        res.status(200).json({
+            ...resp
+        });
     }
 });
 

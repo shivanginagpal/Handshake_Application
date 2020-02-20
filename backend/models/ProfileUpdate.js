@@ -106,5 +106,50 @@ let educationProfileExsists = async (table,studentEducation,conn)=>{
         }
     }
 }
+
+let updateProfilePic = async (role,profile_pic,id)=>{
+    let table;
+    let conn;
+    let message = "";
+    let status=false;
+    console.log(profile_pic);
+    if (role === 'company'){
+        table = 'company_register';
+    }else{
+        table = 'student_details';
+    }
+    conn = await dbConnection();
+    try {
+        if(conn){
+            console.log(table);
+            console.log("Before updating profile pic in db");
+            await conn.query("START TRANSACTION");
+            await conn.query(`UPDATE ?? SET profile_pic = ? WHERE id = ?`, [
+                        table,profile_pic,id]);
+            await conn.query("COMMIT");
+            console.log("Image uploaded to sql");
+            message = "Image path uploaded to sql table!!";
+            status=true;
+        }                
+    }
+    catch(e){
+        console.log(e);
+        message = "Error at server side! Please login again to continue!!";
+        status = false;
+        await con.query("ROLLBACK");
+    }
+    finally{
+        if(conn){
+            await conn.release();
+            await conn.destroy();
+        }
+        return {
+            status : status,
+            message : message
+        }
+    } 
+}
+
 module.exports = {updateStudentBasic,
-                    updateStudentEducation}
+                    updateStudentEducation,
+                    updateProfilePic}
