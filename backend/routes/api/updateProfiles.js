@@ -10,15 +10,18 @@ router.get('/test',(req, res) => res.json({msg:"Student Works"}));
 router.post("/updateStudentBasic", async function(req,res){
     var resp ={};
     console.log("In update student Basic Details");
+    console.log(req.body);
     let studentId = req.body.id;
     var studentBasic ={
-       // "first_name" : req.body.firstname,
-        //"last_name" : req.body.lastname,
-        //"email"     : req.body.email,
-        "dob" : req.body.dob,
-        "city": req.body.city,
-        "state": req.body.state,
-        "country": req.body.country,
+        "first_name" : req.body.firstname,
+        "last_name" : req.body.lastname,
+        "email"     : req.body.email,
+        "dob"       : req.body.dob,
+        "city"      : req.body.city,
+        "state"     : req.body.state,
+        "country"   : req.body.country,
+        "phone_num" : req.body.phone_num,
+        "skills"    : req.body.skills,
         "career_obj": req.body.careerObj
     }
     try {
@@ -49,13 +52,13 @@ router.post("/updateStudentEducation", async function(req,res){
         return;
     }
     var studentEducation ={
-        "student_id" : req.body.id,
-        "college_name": req.body.clgName,
-        "degree":req.body.degree,
-        "location": req.body.location,
-        "major": req.body.major,
-        "year_passing": req.body.passingYear,
-        "cgpa":req.body.cgpa
+        "student_id"    : req.body.id,
+        "college_name"  : req.body.clgName,
+        "degree"        :req.body.degree,
+        "location"      : req.body.location,
+        "major"         : req.body.major,
+        "year_passing"  : req.body.passingYear,
+        "cgpa"          :req.body.cgpa
     }
     try {
         console.log("sending update student education details to db");
@@ -73,6 +76,42 @@ router.post("/updateStudentEducation", async function(req,res){
             });
     }
 });
+
+router.post("/updateStudentWorkExp", async (req, res) => {
+    let resp = {};
+    console.log("in student experience");
+    if (!req.body.id || !req.body.company_name || !req.body.start_date) {
+        console.log("Missing primary key");
+        res.status(400).json({
+            msg: "missing primary key "
+        });
+        return;
+    }
+    var studentExperience = {
+        "student_id"    : req.body.id,
+        "company_name"  : req.body.company_name,
+        "title"         : req.body.title,
+        "location"      : req.body.location,
+        "start_date"    : req.body.start_date,
+        "end_date"      : req.body.work_desc
+    }
+    try {
+        console.log("Sending update to student experience details");
+        resp = await profile.updateStudentWorkExp(studentExperience);
+
+    } catch (e) {
+        console.log(e);
+        resp.status = false;
+        resp.message = "error at database";
+    }
+    finally {
+        res.status(200).json(
+            {
+                ...resp
+            });
+    }
+});
+
 router.post('/updateStudentProfilePic',helper.upload.single('img'), async (req,res)=>{
     console.log("In Update student profile picture");
     console.log(req.body);

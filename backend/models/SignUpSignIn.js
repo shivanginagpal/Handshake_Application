@@ -104,14 +104,14 @@ var signIn = async (userData)=>{
     }
     var message = "Invalid Credentials";
     var userID = -1;
-    status = false;
+    var status = false;
     try{
         console.log("In signin dbAccess..");
         await conn.query("START TRANSACTION");
         let result = await conn.query('Select password, '+prefix+'id from ?? where email=?',[table,email]);
         await conn.query('COMMIT');
         if(result.length > 0){
-            dbPassword = userType == "student" ? result[0]["password"] : result[0]["password"];
+            let dbPassword = userType == "student" ? result[0]["password"] : result[0]["password"];
             //console.log("user password.."+userPassword);
             //console.log("dbPassword.."+dbPassword);
             if(userPassword == dbPassword){
