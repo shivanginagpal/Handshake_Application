@@ -1,0 +1,81 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { getID } from "../auth/HelperApis";
+import CompanyNavbar from "./CompanyNavbar";
+
+class jobPost extends Component {
+    constructor() {
+        super();
+        this.state = {
+            job_title: '',
+            posting_date: '',
+            app_deadline: '',
+            salary: '',
+            location: '',
+            job_description: '',
+            job_category: '',
+            //id: '',
+            errors: {}
+        };
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        let company_id = getID();
+        console.log(`User Id is : ${company_id}`);
+        //this.setState({id : company_id});
+
+        const newJobPost = {
+            job_title: this.state.job_title,
+            posting_date: this.state.posting_date,
+            app_deadline: this.state.app_deadline,
+            salary: this.state.salary,
+            location: this.state.location,
+            job_description: this.state.job_description,
+            job_category: this.state.job_category,
+            company_id : company_id
+        };
+        console.log(newJobPost);
+        axios
+        .post('http://localhost:5000/addJobPost', newJobPost)
+        .then(res=>console.log(res.data))
+        .catch(err=> this.setState({errors: err.response.data}));
+    }
+
+    render() {
+        return (
+            <div>
+            <CompanyNavbar/>
+            
+            <form onSubmit={this.onSubmit}>
+            <div class="form-group">
+              <input type="text" class="form-control form-control-lg" placeholder="* School Or Bootcamp" name="school" required />
+            </div>
+                <div><p>Job Title: </p><input type="text" placeholder="Job Title" name="job_title" onChange={this.onChange} value={this.state.job_title} /></div>
+
+                <div><p>Job Posting Date: </p><input type="date" placeholder="Posting Date" name="posting_date" value={this.state.posting_date} onChange={this.onChange} /></div>
+
+                <div><p>Application Deadline: </p><input type="date" placeholder="Application Deadline" name="app_deadline" value={this.state.app_deadline} onChange={this.onChange} /></div>
+
+                <div><p>salary: </p><input type="number" placeholder="Salary" name="salary" value={this.state.salary} onChange={this.onChange} /></div>
+
+                <div><p>Job Location: </p><input type="text" placeholder="Location" name="location" value={this.state.location} onChange={this.onChange} /></div>
+
+                <div><p>Job Description: </p><input type="text" placeholder="Description" name="job_description" value={this.state.job_description} onChange={this.onChange} /></div>
+
+                <div><p>Job Category: </p><input type="text" placeholder="Category" name="job_category" value={this.state.job_category} onChange={this.onChange} /></div>
+               
+                <br></br>
+                <div><input type="submit" value="Post Job" /> </div>
+            </form>
+            </div>
+        );
+    }
+}
+export default jobPost;
