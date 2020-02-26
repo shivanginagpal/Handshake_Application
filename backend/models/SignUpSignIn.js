@@ -1,4 +1,6 @@
 'use strict'
+const jwt = require('jsonwebtoken');
+const keys = require('../config/keys');
 const dbConnection = require('./dbConnectionPool');
 
 var signUpStudent =  async (studentData) =>{
@@ -93,32 +95,35 @@ var signIn = async (userData)=>{
     let conn = await dbConnection();
     let table;
     let {email,password,userType} = userData;
-    let userPassword = password;
-    let prefix = "", userIDText = "", usernameText = "", name="";
+ 
     if(userType == "student"){
         table = "student_register";
-        prefix = "student_";
     } else {
         table = "company_register";
-        prefix = "company_";
     }
     var message = "Invalid Credentials";
-    var userID = -1;
     var status = false;
+    var token;
+    var payload;
     try{
         console.log("In signin dbAccess..");
         await conn.query("START TRANSACTION");
-        let result = await conn.query('Select password, '+prefix+'id from ?? where email=?',[table,email]);
+        let result = await conn.query('Select * from ?? where email=?',[table,email]);
         await conn.query('COMMIT');
         if(result.length > 0){
-            let dbPassword = userType == "student" ? result[0]["password"] : result[0]["password"];
-            //console.log("user password.."+userPassword);
-            //console.log("dbPassword.."+dbPassword);
-            if(userPassword == dbPassword){
+            let dbPassword = result[0]["password"];
+            console.log("user password.."+password);
+            console.log("dbPassword.."+dbPassword);
+            if(password == dbPassword){
                 message = "Logged in successfully";
-                userIDText = userType == "student" ? "student_id" : "company_id" ;
-                userID = userType == "student" ? result[0]["student_id"] : result[0]["company_id"] ;
-                //name = userType == "student" ? result[0]["student_name"] : result[0]["company_name"] ;
+                let userID = result[0]['id'];
+                let userProPic = result[0]['profile_pic'];
+                let name = userType=="student" ? result[0]['first_name']:result[0]['company_name'];
+
+                payload = { id: userID, img : userProPic, name: name}
+                console.log(payload);
+                //JWT token
+                token = jwt.sign(payload, keys.secret, {expiresIn:3600});
                 status = true;
             } else{
                 message = "Incorrect Password!!";
@@ -126,8 +131,6 @@ var signIn = async (userData)=>{
         } else {
             message = "Invalid Email";
         }
-       // console.log("result is..");
-        //console.log(result);
         console.log(message);
     } catch(e){
         console.log(e);
@@ -141,9 +144,8 @@ var signIn = async (userData)=>{
         return {
                 status : status,
                 message : message,
-                [userIDText] : userID,
-                userType : userType,
-                name : name
+                token : token,
+                payload : payload
         };
     }
 }

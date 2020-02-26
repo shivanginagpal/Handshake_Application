@@ -8,7 +8,7 @@ const SignUpSignIn = require('../../models/SignUpSignIn');
 router.get('/signUp',(req,res) => res.json({msg:"Sign Up Sign In works"}));
 
 
-var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 router.post("/signUpStudent", async function(req, res){
@@ -28,6 +28,9 @@ router.post("/signUpStudent", async function(req, res){
             };
         console.log("before calling Models(DB) signup");
         responseObj = await SignUpSignIn.signUpStudent(studentDetails);
+        if(responseObj.status){
+            console.log(responseObj);
+        }
         
     } catch(e) {
         console.log(e);
@@ -83,21 +86,13 @@ router.post("/signIn", async function(req, res){
         };
         var responseObj = await SignUpSignIn.signIn(userData);
         status = responseObj.status;
-        let user_id = userType === "student" ? "student_id" : "company_id";
-       // let user_name = userType === "owner" ? "owner_name" : "buyer_name";
-        //let name = responseObj.name;
-        
-        console.log(responseObj);
-        if(status){
+        if (status){
             res.cookie("user_type",userType,{maxAge: 900000, httpOnly: false, path : '/'});
-            res.cookie(user_id,responseObj[user_id],{maxAge: 900000, httpOnly: false, path : '/'});
-            res.cookie("name",responseObj.name,{maxAge: 900000, httpOnly: false, path : '/'});
-            req.session.user = email;
+            res.cookie("id",responseObj.payload.id,{maxAge: 900000, httpOnly: false, path : '/'});
+            res.cookie("name",responseObj.payload.name,{maxAge: 900000, httpOnly: false, path : '/'});
+            //req.session.user = email;
         }
-       /* res.writeHead(200,{
-            "status" : 200,
-            'Content-Type' : 'text/plain'
-        })*/
+
         console.log("responseObj....");
         console.log(responseObj);
     }catch(e){

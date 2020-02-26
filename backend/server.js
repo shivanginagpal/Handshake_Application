@@ -1,23 +1,39 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 var signUpSignIn = require('./routes/api/signUpSignIn');
 var updateProfile = require('./routes/api/updateProfiles');
 var updateCompanyProfile = require('./routes/api/updateCompanyProfile');
+var studentSearch = require('./routes/api/studentSearch');
+var companyProfile = require('./routes/api/getCompanyProfile');
+var jobPost = require('./routes/api/jobPosts');
+var eventPost = require('./routes/api/eventPosts');
 var dbConnection = require('./models/dbConnectionPool');
 
 const app = express();
 app.set('view engine', 'ejs');
 const port = process.env.PORT || 5000;
 
+//use cors to allow cross origin resource sharing
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 // var session = require('express-session');
-// var cookieParser = require('cookie-parser');
+//var cookieParser = require('cookie-parser');
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+//Allow Access Control
+app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Cache-Control', 'no-cache');
+  next();
+});
 
 testDBConection = async() => {
     let con = await dbConnection();
@@ -36,11 +52,14 @@ testDBConection();
 // }));
 
 //Use Routes
-// app.use('/api/students',students);
-// app.use('/api/company',company);
+
 app.use('/',signUpSignIn);
 app.use('/',updateProfile);
 app.use('/',updateCompanyProfile);
+app.use('/',studentSearch);
+app.use('/',companyProfile);
+app.use('/',jobPost);
+app.use('/',eventPost);
 
 app.get('/',(req,res) => res.send('Hello World!!'));
 
