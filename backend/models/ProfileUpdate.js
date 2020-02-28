@@ -50,6 +50,7 @@ var updateStudentEducation = async(studentEducation)=>{
     let status = false;
     let table = 'student_education';
     let profileType = 'education';
+    console.log(studentEducation);
 
     try{
         conn = await dbConnection();
@@ -105,18 +106,19 @@ let updateStudentWorkExp = async(studentExperience)=>{
     try{
         conn = await dbConnection();
         if(conn){
-            var userExists = await studentProfileExsists(table,studentEducation,conn,profileType);
+            var userExists = await studentProfileExsists(table,studentExperience,conn,profileType);
                 console.log(userExists);
                 await conn.query("START TRANSACTION");
                 if (!userExists){
                     console.log("Experience Record does not exists ");
-                    await conn.query('INSERT INTO ?? SET ?',[table,studentEducation]);
+                    await conn.query('INSERT INTO ?? SET ?',[table,studentExperience]);
                 }else{
                     console.log("Experience Record exists ");
-                    await conn.query('UPDATE ?? SET  title=?, location=?,end_date=? where student_id =? AND company_name=? AND start_date = ?',
+                    await conn.query('UPDATE ?? SET  title=?, location=?,end_date=?,work_desc=? where student_id =? AND company_name=? AND start_date = ?',
                     [table, studentExperience.title,
                             studentExperience.location, 
                             studentExperience.end_date,
+                            studentExperience.work_desc,
                             studentExperience.student_id,
                             studentExperience.company_name,
                             studentExperience.start_date]);

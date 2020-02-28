@@ -9,6 +9,7 @@ var studentSearch = require('./routes/api/studentSearch');
 var companyProfile = require('./routes/api/getCompanyProfile');
 var jobPost = require('./routes/api/jobPosts');
 var eventPost = require('./routes/api/eventPosts');
+var getStudentProfile = require('./routes/api/getStudentProfile');
 var dbConnection = require('./models/dbConnectionPool');
 
 const app = express();
@@ -60,6 +61,7 @@ app.use('/',studentSearch);
 app.use('/',companyProfile);
 app.use('/',jobPost);
 app.use('/',eventPost);
+app.use('/',getStudentProfile);
 
 app.get('/',(req,res) => res.send('Hello World!!'));
 

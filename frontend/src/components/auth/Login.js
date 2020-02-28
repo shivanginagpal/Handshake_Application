@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import axios from 'axios';
-import cookie from 'react-cookies';
-import {Redirect}  from 'react-router';
-
-import { getUserType } from "./HelperApis";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import classnames from 'classnames';
+import { loginUser } from '../../actions/authAction';
 
 class Login extends Component {
     constructor() {
@@ -13,17 +12,29 @@ class Login extends Component {
             password: '',
             userType: '',
             errors: {},
-            authFlag : false
         };
 
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
-    //Call the Will Mount to set the auth Flag to false
-    componentWillMount(){
-        this.setState({
-            authFlag : false
-        })
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            if(this.props.auth.user.userType ==='student')
+                this.props.history.push('/studentHome');
+            else if(this.props.auth.user.userType === 'company')
+                this.props.history.push('/companyHome');
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.auth.isAuthenticated){
+            if(nextProps.auth.user.userType ==='student')
+                this.props.history.push('/studentHome');
+            else if(nextProps.auth.user.userType === 'company')
+                this.props.history.push('/companyHome');
+        }
+        if(nextProps.errors) {
+            this.setState({errors:nextProps.errors});
+        }
     }
 
     onChange(e){
@@ -38,46 +49,31 @@ class Login extends Component {
             userType : this.state.userType
         };
         console.log(user);
-        //set the with credentials to true
-        axios.defaults.withCredentials = true;
-        //make a post request with the user data
+        this.props.loginUser(user);
+        // //set the with credentials to true
+        // axios.defaults.withCredentials = true;
+        // //make a post request with the user data
     
-        axios.post('http://localhost:5000/signIn',user)
-        .then(res => {
-            console.log(res.data);
-            if(res.status === 200){
-                this.setState({
-                    authFlag : true,
-                })
-            }else{
-                this.setState({
-                    authFlag : false,
-                })
-                }
-            })
+        // axios.post('http://localhost:5000/signIn',user)
+        // .then(res => {
+        //     console.log(res.data);
+        //     if(res.status === 200){
+        //         this.setState({
+        //             authFlag : true,
+        //         })
+        //     }else{
+        //         this.setState({
+        //             authFlag : false,
+        //         })
+        //         }
+        //     })
         }
 
     render() {
-        console.log("In Render function..");
-        let redirectVar;
-        let user_type = getUserType();
-        console.log(user_type);
-        if(!cookie.load('user_type')){
-            redirectVar = <Redirect to= "/login"/>
-        }
-
-        if( user_type === "company"){
-            console.log("Cookies found");
-            redirectVar = <Redirect to= "/companyHome"/>
-        }else if(user_type === "student")
-        {
-            console.log("Redirecting to student");
-            redirectVar = <Redirect to= "/studentHome"/>
-        }
+        const { errors } = this.state;
 
         return (
-            <div>
-                {redirectVar}
+            
             <div className="login">
             <div className="container">
               <div className="row">
@@ -86,12 +82,30 @@ class Login extends Component {
                   <p className="lead text-center">Sign in to your Handshake account</p>
                   <form onSubmit={this.onSubmit}>
                     <div className="form-group">
-                      <input type="email" className="form-control form-control-lg" placeholder="Email Address" 
-                            name="email" value={this.state.email} onChange={this.onChange} />
+                      <input type="email" 
+                        className={classnames('form-control form-control-lg', {
+                            'is-invalid': errors.email
+                        })} 
+                        placeholder="Email Address" 
+                        name="email" 
+                        value={this.state.email} 
+                        onChange={this.onChange} />
+                            {errors.email && (
+                        <div className="invalid-feedback">{errors.email}</div>
+                             )}
                     </div>
                     <div className="form-group">
-                      <input type="password" className="form-control form-control-lg" placeholder="Password" 
-                            name="password" value={this.state.password} onChange={this.onChange}/>
+                      <input type="password" 
+                        className={classnames('form-control form-control-lg', {
+                            'is-invalid': errors.password
+                        })} 
+                        placeholder="Password" 
+                        name="password" 
+                        value={this.state.password} 
+                        onChange={this.onChange}/>
+                        {errors.password && (
+                        <div className="invalid-feedback">{errors.password}</div>
+                            )}
                     </div>
                     
                     <div className="custom-control custom-radio custom-control-inline">
@@ -111,9 +125,19 @@ class Login extends Component {
               </div>
             </div>
           </div>
-        </div>
         )
     }
 }
 
-export default Login;
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    errors: state.errors
+});
+ 
+export default connect (mapStateToProps, {loginUser}) (Login);

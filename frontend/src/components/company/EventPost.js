@@ -48,6 +48,8 @@ class eventPost extends Component {
         return (
             <div>
             <CompanyNavbar/>
+            <div className="container">
+            <div className="col-md-8 m-auto">
             <form onSubmit={this.onSubmit}>
                 <div><p>Event Name: </p><input type="text" placeholder="Event Name" name="event_name" onChange={this.onChange} value={this.state.event_name} /></div>
 
@@ -64,6 +66,8 @@ class eventPost extends Component {
                  <br></br>
                 <div><input type="submit" value="Add Event" /> </div>
             </form>
+            </div>
+            </div>
             </div>
         );
     }

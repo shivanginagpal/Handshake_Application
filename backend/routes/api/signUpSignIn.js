@@ -4,24 +4,34 @@ const router = express.Router();
 const sha1 = require('sha1');
 //Load SignUpSignIn Model
 const SignUpSignIn = require('../../models/SignUpSignIn');
+const validateRegisterInput = require("../../validation/register");
 
 router.get('/signUp',(req,res) => res.json({msg:"Sign Up Sign In works"}));
 
 
 //var cookieParser = require('cookie-parser');
-var session = require('express-session');
+//var session = require('express-session');
 
 router.post("/signUpStudent", async function(req, res){
-    let{email, password, firstname, lastname, school} = req.body;
+    
+    const { errors, isValid } = validateRegisterInput(req.body);
+    console.log(isValid);
+    if (!isValid) {
+        return res.status(400).json(errors);
+      }
+
+    let{email, password, first_name, last_name, school} = req.body;
     var responseObj = {};
+
+  
     console.log("In signup student route");
     console.log(req.body);
     try {
         password = sha1(password);
         email = email.toLowerCase().trim();
         let studentDetails = {
-            first_name : firstname,
-            last_name : lastname,
+            first_name : first_name,
+            last_name : last_name,
             email : email,
             password : password,
             school : school 
@@ -86,12 +96,12 @@ router.post("/signIn", async function(req, res){
         };
         var responseObj = await SignUpSignIn.signIn(userData);
         status = responseObj.status;
-        if (status){
-            res.cookie("user_type",userType,{maxAge: 900000, httpOnly: false, path : '/'});
-            res.cookie("id",responseObj.payload.id,{maxAge: 900000, httpOnly: false, path : '/'});
-            res.cookie("name",responseObj.payload.name,{maxAge: 900000, httpOnly: false, path : '/'});
-            //req.session.user = email;
-        }
+        // if (status){
+        //     res.cookie("user_type",userType,{maxAge: 900000, httpOnly: false, path : '/'});
+        //     res.cookie("id",responseObj.payload.id,{maxAge: 900000, httpOnly: false, path : '/'});
+        //     res.cookie("name",responseObj.payload.name,{maxAge: 900000, httpOnly: false, path : '/'});
+        //     //req.session.user = email;
+        // }
 
         console.log("responseObj....");
         console.log(responseObj);

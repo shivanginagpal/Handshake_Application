@@ -13,14 +13,14 @@ class Navbar extends Component {
       <div className="collapse navbar-collapse" id="mobile-nav">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a className="nav-link" href="profiles.html"> Student
+            <a className="nav-link" href="/"> Student
             </a>
           </li>
         </ul>
 
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <a className="nav-link" href="profiles.html"> Company
+            <a className="nav-link" href="/"> Company
             </a>
           </li>
         </ul>

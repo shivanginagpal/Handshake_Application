@@ -52,7 +52,17 @@ const storage = multer.diskStorage({
     checkFileType(file, cb);
     }
   });
-  
+
+  const isEmpty = (prop)=>{
+    if(prop === "" || prop === null || typeof prop === "undefined" ||
+    (typeof prop === "object" && Object.keys(prop).length === 0) ||
+    (typeof prop === "string" && prop.trim().length === 0)){
+        return true;
+    } else {
+        return false;
+    }
+  }
 
 module.exports = {profileExsists,
-                upload}
+                upload,
+                isEmpty}

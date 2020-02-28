@@ -118,9 +118,10 @@ var signIn = async (userData)=>{
                 message = "Logged in successfully";
                 let userID = result[0]['id'];
                 let userProPic = result[0]['profile_pic'];
-                let name = userType=="student" ? result[0]['first_name']:result[0]['company_name'];
+                let fname = userType=="student" ? result[0]['first_name']:result[0]['company_name'];
+                let lname = userType=="student" ? result[0]['last_name']:result[0]['company_name'];
 
-                payload = { id: userID, img : userProPic, name: name}
+                payload = { id: userID, img : userProPic, first_name: fname, last_name: lname, userType: userType }
                 console.log(payload);
                 //JWT token
                 token = jwt.sign(payload, keys.secret, {expiresIn:3600});
@@ -145,7 +146,7 @@ var signIn = async (userData)=>{
                 status : status,
                 message : message,
                 token : token,
-                payload : payload
+                //payload : payload
         };
     }
 }

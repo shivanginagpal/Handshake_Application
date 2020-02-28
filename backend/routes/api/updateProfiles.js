@@ -13,16 +13,16 @@ router.post("/updateStudentBasic", async function(req,res){
     console.log(req.body);
     let studentId = req.body.id;
     var studentBasic ={
-        "first_name" : req.body.firstname,
-        "last_name" : req.body.lastname,
+        "first_name": req.body.first_name,
+        "last_name" : req.body.last_name,
         "email"     : req.body.email,
         "dob"       : req.body.dob,
         "city"      : req.body.city,
         "state"     : req.body.state,
         "country"   : req.body.country,
         "phone_num" : req.body.phone_num,
-        "skills"    : req.body.skills,
-        "career_obj": req.body.careerObj
+        "skill_set" : req.body.skill_set,
+        "career_obj": req.body.career_obj
     }
     try {
         console.log("sending update student details to db");
@@ -53,12 +53,12 @@ router.post("/updateStudentEducation", async function(req,res){
     }
     var studentEducation ={
         "student_id"    : req.body.id,
-        "college_name"  : req.body.clgName,
-        "degree"        :req.body.degree,
+        "college_name"  : req.body.college_name,
+        "degree"        : req.body.degree,
         "location"      : req.body.location,
         "major"         : req.body.major,
-        "year_passing"  : req.body.passingYear,
-        "cgpa"          :req.body.cgpa
+        "year_passing"  : req.body.year_passing,
+        "cgpa"          : req.body.cgpa
     }
     try {
         console.log("sending update student education details to db");
@@ -93,7 +93,8 @@ router.post("/updateStudentWorkExp", async (req, res) => {
         "title"         : req.body.title,
         "location"      : req.body.location,
         "start_date"    : req.body.start_date,
-        "end_date"      : req.body.work_desc
+        "end_date"      : req.body.end_date,
+        "work_desc"     : req.body.work_desc
     }
     try {
         console.log("Sending update to student experience details");

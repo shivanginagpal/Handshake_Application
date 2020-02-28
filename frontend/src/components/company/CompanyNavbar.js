@@ -1,7 +1,15 @@
 import React,{Component} from "react";
-import {handleLogout, getUserName} from "../auth/HelperApis";
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authAction';
 
-function CompanyNavbar(){
+class CompanyNavbar extends Component{
+  handleLogout(e){
+    e.preventDefault();
+    this.props.logoutUser();
+    window.location.href = '/';
+  }
+  render(){
 
      //let name = getUserName();
      return(
@@ -36,7 +44,7 @@ function CompanyNavbar(){
     
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/" onClick={handleLogout}>Logout</a>
+                <a className="nav-link" href="/" onClick={this.handleLogout.bind(this)}>Logout</a>
               </li>
             </ul>
           </div>
@@ -45,4 +53,12 @@ function CompanyNavbar(){
 
      );
  }
- export default CompanyNavbar;
+}
+ CompanyNavbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired 
+}
+//  const mapStateToProps = (state) => ({
+//    auth: state.auth
+//  });
+export default connect (null,{logoutUser}) (CompanyNavbar);

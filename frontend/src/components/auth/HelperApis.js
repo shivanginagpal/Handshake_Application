@@ -1,5 +1,18 @@
 //import React,{Component} from "react";
-import cookie from 'react-cookies';
+import jwt_decode from 'jwt-decode';
+
+import axios from 'axios';
+
+const setAuthToken = token => {
+  if (token) {
+    // Apply to every request
+    axios.defaults.headers.common['Authorization'] = token;
+  } else {
+    // Delete auth header
+    delete axios.defaults.headers.common['Authorization'];
+  }
+};
+
 
 export var isFieldEmpty = (prop)=>{
     if(prop === "" || prop === null || typeof prop === "undefined"){
@@ -10,33 +23,26 @@ export var isFieldEmpty = (prop)=>{
 };
 
 export var getUserName = ()=> {
-    let name = cookie.load("name");
-    if(!isFieldEmpty(name)){
-        return name;
-    } else {
-        return "";
+    if(localStorage.jwtToken){
+        const decoded = jwt_decode(localStorage.jwtToken);
+        return decoded.first_name;
     }
+    return "";
 }
 export var getUserType = ()=> {
-    let user_type = cookie.load("user_type");
-    if(!isFieldEmpty(user_type)){
-        return user_type;
-    } else {
-        return "";
+    if(localStorage.jwtToken){
+        const decoded = jwt_decode(localStorage.jwtToken);
+        return decoded.userType;
     }
-}
-export  var getID = ()=> {
-    let id = cookie.load("id");
-    if(!isFieldEmpty(id)){
-        return id;
-    } else {
-        return "";
-    }
+    return "";
 }
 
-export var handleLogout = () => {
-    console.log("Removing cookies");
-    cookie.remove("user_type", { path: '/' });
-    cookie.remove("id", { path: '/' });
-    cookie.remove("name", { path: '/' });
+export  var getID = ()=> {
+    if(localStorage.jwtToken){
+        const decoded = jwt_decode(localStorage.jwtToken);
+        return decoded.id;
+    }
+    return "";
 }
+
+export default setAuthToken;
