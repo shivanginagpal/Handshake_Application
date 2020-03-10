@@ -42,4 +42,85 @@ var getStudentDetails = async studentId => {
     }
   };
 
-module.exports = {getStudentDetails}
+  var getStudentEducationDetails = async studentId => {
+    let conn;
+    let msg;
+    let status = false;
+    let table = "student_education";
+    try {
+      conn = await dbConnection();
+      if (conn) {
+        var user = true;
+        //var user = await helper.profileExsists(studentId, table, conn);
+        console.log("user: ", user);
+        await conn.query("START TRANSACTION");
+        if (user) {
+          var education = await conn.query("select * from ?? where student_id = ?", [
+            table,
+            studentId
+          ]);
+        }
+        await conn.query("COMMIT");
+        status = true;
+        msg = "student details fetched";
+        console.log(msg);
+      }
+    } catch (e) {
+      console.log(e);
+      msg = "error in connecting db";
+      status = false;
+    } finally {
+      if (conn) {
+        await conn.release();
+        await conn.destroy();
+      }
+      return {
+        status: status,
+        message: msg,
+        education: education
+      };
+    }
+  };
+
+  var getStudentExperienceDetails = async studentId => {
+    let conn;
+    let msg;
+    let status = false;
+    let table = "student_experience";
+    try {
+      conn = await dbConnection();
+      if (conn) {
+        var user = true;
+        //var user = await helper.profileExsists(studentId, table, conn);
+        console.log("user: ", user);
+        await conn.query("START TRANSACTION");
+        if (user) {
+          var experience = await conn.query("select * from ?? where student_id = ?", [
+            table,
+            studentId
+          ]);
+        }
+        await conn.query("COMMIT");
+        status = true;
+        msg = "student details fetched";
+        console.log(msg);
+      }
+    } catch (e) {
+      console.log(e);
+      msg = "error in connecting db";
+      status = false;
+    } finally {
+      if (conn) {
+        await conn.release();
+        await conn.destroy();
+      }
+      return {
+        status: status,
+        message: msg,
+        experience: experience
+      };
+    }
+  };
+module.exports = {getStudentDetails,
+                  getStudentEducationDetails,
+                  getStudentExperienceDetails}

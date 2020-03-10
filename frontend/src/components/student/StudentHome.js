@@ -24,7 +24,7 @@ class StudentHome extends Component {
             dashboardcontent = (
               <div>
                 <p className="lead text-muted">
-                  Welcome <Link to={`/profile/${profile.handle}`}>{user.first_name}</Link>
+                  Welcome {user.first_name}
                 </p>
                 <StudentProfileAction />
                 {/* <Experience experience={profile.experience} />
@@ -60,6 +60,7 @@ class StudentHome extends Component {
                     <div className="col-md-12">
                       {dashboardcontent}
                     </div>
+                    {/* <DashStudentExperience /> */}
                   </div>
                 </div>
               </div>

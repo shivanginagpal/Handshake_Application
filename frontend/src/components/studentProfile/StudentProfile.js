@@ -2,49 +2,60 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withRouter } from "react-router-dom";
-import StudentHeader from './StudentHeader';
-import Spinner from '../common/Spinner';
-import {getCurrentProfile} from '../../actions/profileActions';
+import ProfStudentHeader from './ProfStudentHeader';
+import ProfStudentEducation from './ProfStudentEducation';
+import ProfStudentExperience from './ProfStudentExperience';
+
+import {getCurrentProfile, getStudentEducation, getStudentExperience } from '../../actions/profileActions';
 import StudentNavbar from "../student/StudentNavbar";
 
 class StudentProfile extends Component {
 
-  componentDidMount() {
+componentDidMount() {
     if(this.props.auth){
-      this.props.getCurrentProfile(this.props.auth.user.id);
+       this.props.getCurrentProfile(this.props.auth.user.id);
+       this.props.getStudentEducation(this.props.auth.user.id);
+       this.props.getStudentExperience(this.props.auth.user.id);
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.profile.profile === null && this.props.profile.loading) {
-      this.props.history.push('/not-found');
-    }
-  }
+  //  componentWillReceiveProps(nextProps) {
+  //   if (nextProps.profile.profile === null && this.props.profile.loading) {
+  //     this.props.history.push('/not-found');
+  //   }
+  //  }
 
   render() {
-    const { profile, loading } = this.props.profile;
+    const { profile=[], loading } = this.props.profile;
+    const { education=[], eduLoading } = this.props.education;
+    const { experience=[], expLoading } = this.props.experience;
+    
+    console.log("Profile:")
+    console.log(profile);
+    console.log(" Edu loading value:", eduLoading);
+    console.log(education);
+    console.log("Exp loading value:", expLoading);
+    console.log(experience);
+
     let profileContent;
 
-    if (profile === null || loading) {
+    if (profile === null || loading || education === null || eduLoading ||
+      experience === null || expLoading) {
       profileContent = "Student Profile will be displayed below:";
     } else {
-      profileContent = (
+    profileContent = (
         <div>
           <div className="row">
             <div className="col-md-6">
-              <Link to="/profiles" className="btn btn-light mb-3 float-left">
-                Back To Profiles
+              <Link to="/studentHome" className="btn btn-light mb-3 float-left">
+                Back To Home
               </Link>
             </div>
             <div className="col-md-6" />
           </div>
-          <StudentHeader profile={profile} />
-          {/* <ProfileAbout profile={profile} />
-          <ProfileCreds
-            education={profile.education}
-            experience={profile.experience}
-          /> */}
+          <ProfStudentHeader profile={profile} />
+          <ProfStudentEducation education={education}/>
+          <ProfStudentExperience experience={experience} />
           
         </div>
       );
@@ -67,6 +78,8 @@ class StudentProfile extends Component {
 
 StudentProfile.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  getStudentEducation: PropTypes.func.isRequired,
+  getStudentExperience: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -74,8 +87,10 @@ StudentProfile.propTypes = {
 
 const mapStateToProps = state => ({
   profile: state.profile,
+  education: state.education,
+  experience: state.experience,
   auth: state.auth,
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(withRouter(StudentProfile));
+export default connect(mapStateToProps, { getCurrentProfile, getStudentEducation, getStudentExperience })(StudentProfile);

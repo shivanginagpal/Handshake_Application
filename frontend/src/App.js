@@ -11,7 +11,7 @@ import { clearProfile } from './actions/profileActions';
 import './App.css';
 
 //check for token
-if(localStorage.jwtToken){
+if(localStorage.jwtToken && localStorage.jwtToken != "undefined"){
   //set auth token header auth
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);

@@ -12,7 +12,7 @@ router.post('/updateCompanyProfile', async (req,res)=>{
     console.log("In update Company profile");
     let companyId = req.body.id;
     var companyProfile ={
-        "company_name" : req.body.name,
+        "company_name" : req.body.company_name,
         "location": req.body.location,
         "description": req.body.description,
         "contact_info": req.body.contact_info,

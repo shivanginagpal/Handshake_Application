@@ -15,8 +15,8 @@ class Landing extends Component {
                     <h1 className="display-3 mb-4">Handshake</h1>
                     <p className="lead">A platform to connect Students and recruiters from different Companies</p>
                     <hr />
-                    <a href="/register" class="btn btn-lg btn-info mr-2">Sign Up</a>
-                    <a href="/login" class="btn btn-lg btn-light">Login</a>
+                    {/* <a href="/register" className="btn btn-lg btn-info mr-2">Sign Up</a> */}
+                    <a href="/login" className="btn btn-lg btn-info mr-2">Login</a>
                 </div>
                 </div>
             </div>

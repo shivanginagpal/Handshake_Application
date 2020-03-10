@@ -50,23 +50,6 @@ class Login extends Component {
         };
         console.log(user);
         this.props.loginUser(user);
-        // //set the with credentials to true
-        // axios.defaults.withCredentials = true;
-        // //make a post request with the user data
-    
-        // axios.post('http://localhost:5000/signIn',user)
-        // .then(res => {
-        //     console.log(res.data);
-        //     if(res.status === 200){
-        //         this.setState({
-        //             authFlag : true,
-        //         })
-        //     }else{
-        //         this.setState({
-        //             authFlag : false,
-        //         })
-        //         }
-        //     })
         }
 
     render() {
@@ -81,15 +64,15 @@ class Login extends Component {
                   <h1 className="display-4 text-center">Log In</h1>
                   <p className="lead text-center">Sign in to your Handshake account</p>
                   <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                      <input type="email" 
-                        className={classnames('form-control form-control-lg', {
-                            'is-invalid': errors.email
-                        })} 
-                        placeholder="Email Address" 
-                        name="email" 
-                        value={this.state.email} 
-                        onChange={this.onChange} />
+                        <div className="form-group">
+                        <input type="email" 
+                            className={classnames('form-control form-control-lg', {
+                                'is-invalid': errors.email
+                            })} 
+                            placeholder="Email Address" 
+                            name="email" 
+                            value={this.state.email} 
+                            onChange={this.onChange} />
                             {errors.email && (
                         <div className="invalid-feedback">{errors.email}</div>
                              )}
@@ -107,19 +90,33 @@ class Login extends Component {
                         <div className="invalid-feedback">{errors.password}</div>
                             )}
                     </div>
-                    
-                    <div className="custom-control custom-radio custom-control-inline">
-                    <input type="radio" className="custom-control-input" id="student" name="userType" 
-                            value="student" onChange={this.onChange} />
+                    <div>
+                    <div className={classnames('custom-control custom-radio custom-control-inline')} >
+                    <input type="radio" className={classnames('custom-control-input', {
+                                'is-invalid': errors.userType
+                            })} 
+                            id="student" 
+                            name="userType" 
+                            value="student" 
+                            onChange={this.onChange} />
                         <label className="custom-control-label" htmlFor="student">Student</label>
                     </div>
                     <div className="custom-control custom-radio custom-control-inline">
-                    <input type="radio" className="custom-control-input" id="company" name="userType"
-                            value="company" onChange={this.onChange} />
+                    <input type="radio" className="custom-control-input" 
+                            id="company" 
+                            name="userType"
+                            value="company" 
+                            onChange={this.onChange} />
                         <label className="custom-control-label" htmlFor="company">Company</label>
+                        {errors.userType && (
+                            <div className="invalid-feedback">{errors.userType}</div>
+                        )}
+                    </div>
+                        
                     </div>
                     
                     <input type="submit" className="btn btn-info btn-block mt-4" />
+                        
                   </form>
                 </div>
               </div>

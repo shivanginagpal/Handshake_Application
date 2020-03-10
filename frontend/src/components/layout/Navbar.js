@@ -24,14 +24,21 @@ class Navbar extends Component {
             </a>
           </li>
         </ul>
-
+        
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <a className="nav-link" href="/register">Sign Up</a>
+          <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sign Up
+        </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/register">As Student</a>
+            <a class="dropdown-item" href="/registerCompany">As Company</a>
+          </div>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/login">Login</a>
           </li>
+          
         </ul>
       </div>
     </div>

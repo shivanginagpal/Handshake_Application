@@ -95,6 +95,7 @@ var signIn = async (userData)=>{
     let conn = await dbConnection();
     let table;
     let {email,password,userType} = userData;
+    let errors = {};
  
     if(userType == "student"){
         table = "student_register";
@@ -127,12 +128,12 @@ var signIn = async (userData)=>{
                 token = jwt.sign(payload, keys.secret, {expiresIn:3600});
                 status = true;
             } else{
-                message = "Incorrect Password!!";
+                errors.password = "Incorrect Password! Please try again";
             }
         } else {
+            errors.email = "Invalid User"
             message = "Invalid Email";
         }
-        console.log(message);
     } catch(e){
         console.log(e);
         message = "Issue at database or server.Please restart the systems!";
@@ -146,7 +147,7 @@ var signIn = async (userData)=>{
                 status : status,
                 message : message,
                 token : token,
-                //payload : payload
+                errors: errors
         };
     }
 }

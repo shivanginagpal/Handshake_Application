@@ -40,8 +40,11 @@ router.post("/addEventPost", async function(req, res){
 router.get('/getEventDetails',async function(req,res) {
     var responseObj={};
     try{
-    responseObj=await eventPost.getEventDetails();
-    console.log(responseObj);
+        let user_id = req.query.id;
+        let user_type = req.query.user_type;
+        console.log(user_id,user_type);
+        responseObj=await eventPost.getEventDetails(user_id,user_type);
+        console.log(responseObj);
     }
     catch(e) {
         console.log(e);
@@ -52,4 +55,45 @@ router.get('/getEventDetails',async function(req,res) {
         });
     }
 });
+
+router.post("/registerEvent", async (req, res) => {
+    console.log("in event register Route");
+    console.log(req.body);
+    let { event_id, user_id, register_status } = req.body;
+    var resObj = {};
+    try {
+      
+      let event = {
+        student_id: user_id,
+        register_status: register_status,
+        event_id: event_id
+      };
+      resObj = await eventPost.registerEvent(event);
+    } catch (error) {
+      console.log(error);
+      resObj.status = false;
+    } finally {
+      res.status(200).json({
+        ...resObj
+      });
+    }
+  });
+
+  router.get("/getStudentRegisteredEvents", async (req, res) => {
+    console.log("in Get registered event Route");
+    console.log(req.query);
+    let { user_id } = req.query;
+    var resObj = {};
+    try {
+      resObj = await eventPost.studentRegisteredEvents(user_id);
+    } catch (error) {
+      console.log(error);
+      resObj.status = false;
+    } finally {
+      res.status(200).json({
+        ...resObj
+      });
+    }
+  });
+  
 module.exports=router;

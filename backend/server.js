@@ -10,6 +10,16 @@ var companyProfile = require('./routes/api/getCompanyProfile');
 var jobPost = require('./routes/api/jobPosts');
 var eventPost = require('./routes/api/eventPosts');
 var getStudentProfile = require('./routes/api/getStudentProfile');
+var getStudentEducation = require('./routes/api/getStudentProfile');
+var getStudentExperienceDetails = require('./routes/api/getStudentProfile');
+var getSearchedJobDetails = require('./routes/api/jobPosts');
+var getAppliedJobDetails = require('./routes/api/jobPosts');
+var getUnappliedJobDetails = require('./routes/api/jobPosts');
+var getCompanyProfileDetails = require('./routes/api/getCompanyProfile');
+var getStudentDetailsForJob = require('./routes/api/jobPosts');
+var registerEvent = require('./routes/api/eventPosts');
+var applyForJob = require('./routes/api/jobPosts')
+
 var dbConnection = require('./models/dbConnectionPool');
 
 const app = express();
@@ -18,9 +28,6 @@ const port = process.env.PORT || 5000;
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
-
-// var session = require('express-session');
-//var cookieParser = require('cookie-parser');
 
 //Body Parser Middleware
 app.use(bodyParser.urlencoded({extended: false}));
@@ -44,13 +51,6 @@ testDBConection = async() => {
   }
 testDBConection();
 
-// app.use(session({
-//     secret: 'cmpe273_handshake_node_react_mysql',
-//     resave: false, // Forces the session to be saved back to the session store, even if the session was never modified during the request
-//     saveUninitialized: false, // Force to save uninitialized session to db. A session is uninitialized when it is new but not modified.
-//     duration: 60 * 60 * 1000,    // Overall duration of Session : 30 minutes : 1800 seconds
-//     activeDuration: 5 * 60 * 1000
-// }));
 
 //Use Routes
 
@@ -62,6 +62,15 @@ app.use('/',companyProfile);
 app.use('/',jobPost);
 app.use('/',eventPost);
 app.use('/',getStudentProfile);
+app.use('/',getStudentEducation);
+app.use('/',getStudentExperienceDetails);
+app.use('/',getSearchedJobDetails);
+app.use('/',getAppliedJobDetails);
+app.use('/',getUnappliedJobDetails);
+app.use('/',getCompanyProfileDetails);
+app.use('/',getStudentDetailsForJob);
+app.use('/',registerEvent);
+app.use('/',applyForJob);
 
 app.get('/',(req,res) => res.send('Hello World!!'));
 

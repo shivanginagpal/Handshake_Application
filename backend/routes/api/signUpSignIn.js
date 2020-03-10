@@ -5,6 +5,7 @@ const sha1 = require('sha1');
 //Load SignUpSignIn Model
 const SignUpSignIn = require('../../models/SignUpSignIn');
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 router.get('/signUp',(req,res) => res.json({msg:"Sign Up Sign In works"}));
 
@@ -18,7 +19,7 @@ router.post("/signUpStudent", async function(req, res){
     console.log(isValid);
     if (!isValid) {
         return res.status(400).json(errors);
-      }
+    }
 
     let{email, password, first_name, last_name, school} = req.body;
     var responseObj = {};
@@ -53,7 +54,7 @@ router.post("/signUpStudent", async function(req, res){
 });
 
 router.post("/signUpCompany", async function(req, res){
-    let{email, password, name, location} = req.body;
+    let{email, password, company_name, location} = req.body;
     var responseObj = {};
     console.log("In signup company route");
     console.log(req.body);
@@ -63,7 +64,7 @@ router.post("/signUpCompany", async function(req, res){
         let companyDetails = {
             email : email,
             password : password,
-            company_name : name,
+            company_name : company_name,
             location : location 
         };
         console.log("before calling Models(DB) signup");
@@ -87,6 +88,14 @@ router.post("/signIn", async function(req, res){
     email = email.toLowerCase().trim();
     password = sha1(password);
     let status = false;
+    let numErrors = 0;
+
+    const { errors, isValid } = validateLoginInput(req.body);
+    console.log(isValid);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
+
     console.log("In signin route..");
     try{
         let userData = {
@@ -96,26 +105,26 @@ router.post("/signIn", async function(req, res){
         };
         var responseObj = await SignUpSignIn.signIn(userData);
         status = responseObj.status;
-        // if (status){
-        //     res.cookie("user_type",userType,{maxAge: 900000, httpOnly: false, path : '/'});
-        //     res.cookie("id",responseObj.payload.id,{maxAge: 900000, httpOnly: false, path : '/'});
-        //     res.cookie("name",responseObj.payload.name,{maxAge: 900000, httpOnly: false, path : '/'});
-        //     //req.session.user = email;
-        // }
 
         console.log("responseObj....");
-        console.log(responseObj);
+       // console.log(responseObj);
+        console.log(responseObj.errors);
+        numErrors = (Object.keys(responseObj.errors).length);
+        
     }catch(e){
         console.log(e);
         status = false;
     }
     finally{
-       // res.end(JSON.stringify({...responseObj,status:status}));
-       res.status(200).json({
-        ...responseObj
-     });
-      
+        if (numErrors>0){
+            console.log("TRUE");
+            return res.status(400).json(responseObj.errors);
+        }else{
+            res.status(200).json({
+            ...responseObj
+        });
     }
+  }
  });
 
 module.exports = router;

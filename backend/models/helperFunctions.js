@@ -53,6 +53,27 @@ const storage = multer.diskStorage({
     }
   });
 
+  const storageResume = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, "./uploads/resume");
+    },
+    filename : (req,file,callback) => {
+        // fileExtension = file.originalname.split(".")[1];
+        // console.log("fileExtension", fileExtension);
+        callback(
+          null,
+          file.originalname.split(".")[0] +
+            "-" +
+            Date.now() +
+            path.extname(file.originalname)
+        );
+    }
+  })
+
+  const uploadResumeFile = multer({
+    storage: storageResume
+  });
+
   const isEmpty = (prop)=>{
     if(prop === "" || prop === null || typeof prop === "undefined" ||
     (typeof prop === "object" && Object.keys(prop).length === 0) ||
@@ -65,4 +86,5 @@ const storage = multer.diskStorage({
 
 module.exports = {profileExsists,
                 upload,
-                isEmpty}
+                isEmpty,
+                uploadResumeFile}

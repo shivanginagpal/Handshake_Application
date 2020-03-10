@@ -62,7 +62,7 @@ class jobPost extends Component {
 
                 <div class="form-group"><p>Application Deadline: </p><input type="date" placeholder="Application Deadline" name="app_deadline" value={this.state.app_deadline} onChange={this.onChange} /></div>
 
-                <div class="form-group"><p>salary: </p><input type="number" placeholder="Salary" name="salary" value={this.state.salary} onChange={this.onChange} /></div>
+                <div class="form-group"><p>salary: </p><input type="text" placeholder="Salary" name="salary" value={this.state.salary} onChange={this.onChange} /></div>
 
                 <div class="form-group"v><p>Job Location: </p><input type="text" placeholder="Location" name="location" value={this.state.location} onChange={this.onChange} /></div>
 

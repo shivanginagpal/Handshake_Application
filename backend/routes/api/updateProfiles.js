@@ -4,10 +4,16 @@ const router = express.Router();
 
 const profile = require('../../models/ProfileUpdate');
 const helper = require('../../models/helperFunctions');
+const validateUpdateBasic = require("../../validation/studentBasicValidate");
 
 router.get('/test',(req, res) => res.json({msg:"Student Works"}));
 
 router.post("/updateStudentBasic", async function(req,res){
+    const { errors, isValid } = validateUpdateBasic(req.body);
+    console.log(isValid);
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
     var resp ={};
     console.log("In update student Basic Details");
     console.log(req.body);
@@ -137,6 +143,5 @@ router.post('/updateStudentProfilePic',helper.upload.single('img'), async (req,r
         });
     }
 });
-
 
 module.exports = router;

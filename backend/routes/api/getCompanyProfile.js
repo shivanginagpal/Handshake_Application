@@ -22,4 +22,23 @@ router.post("/getCompanyProfile", async function(req, res){
     }
 });
 
+router.get('/getCompanyProfileDetails', async (req, res) => {
+    console.log("inside profile get request");
+   var company_Id=req.query.id;
+   console.log(company_Id);
+    var resObj = {};
+    try{
+        resObj = await companyProfile.getCompanyProfileDetails(company_Id)
+        console.log(resObj);
+    }
+    catch(e) {
+        console.log(e);
+        resObj.status = false;
+    } finally {
+        res.status(200).json({
+            ...resObj
+        });
+    } 
+});
+
 module.exports = router;

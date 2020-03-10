@@ -54,7 +54,6 @@ import StudentNavbar from "./StudentNavbar";
        profile.career_obj = !isFieldEmpty(profile.career_obj) ? profile.career_obj : '';
 
        this.setState({
-         handle: profile.handle,
          first_name: profile.first_name,
          last_name: profile.last_name,
          dob: profile.dob,

@@ -126,14 +126,16 @@ import {addEducationRecord} from '../../actions/profileActions';
 
 StudentEducation.propTypes = {
     auth: PropTypes.object.isRequired,
-    profile: PropTypes.object.isRequired,
+    //profile: PropTypes.object.isRequired,
+    education: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
   };
   
   //mapping state to props
   const mapStateToProps = state => ({
   auth: state.auth,
-  profile: state.profile,
+  //profile: state.profile,
+  education: state.education,
   errors: state.errors
   });
   

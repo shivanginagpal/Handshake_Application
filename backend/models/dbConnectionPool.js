@@ -3,9 +3,9 @@ var mysql = require('promise-mysql');
 
 var dbConfig = {
     connectionLimit: 500,
-    host      : "localhost",
-    user      : "root",
-    password  : "",
+    host      : "handshake-lab1.cnqe9jbjlpxc.us-east-2.rds.amazonaws.com",
+    user      : "admin",
+    password  : "Usc1987$",
     database  : "handshake",
     debug     : false,
     multipleStatements: true

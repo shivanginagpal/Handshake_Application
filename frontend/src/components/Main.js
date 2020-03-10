@@ -5,16 +5,22 @@ import {Route} from 'react-router-dom';
 import Landing from './layout/Landing';
 import CompanyProfile from './company/CompanyProfile';
 import CompanyHome from './company/CompanyHome';
+import EditCompanyProfile from './company/EditCompanyProfile';
 import JobPost from './company/JobPost';
 import EventPost from './company/EventPost';
 import StudentProfileBasic from './student/StudentProfileBasic';
 import StudentHome from './student/StudentHome';
 import Login from './auth/Login';
 import Register from './auth/Register';
+import RegisterCompany from './auth/RegisterCompany';
 import EditStudentProfileBasic from './student/EditStudentProfileBasic';
 import StudentProfile from './studentProfile/StudentProfile';
 import StudentExperience from './student/StudentExperience';
 import StudentEducation from './student/StudentEducation';
+import Jobs from './studentViews/Jobs';
+import Events from './studentViews/Events';
+import Applications from './studentViews/Applications';
+import RegisteredEvents from './studentViews/RegisteredEvents';
 
 export default class Main extends Component {
     render() {
@@ -25,7 +31,8 @@ export default class Main extends Component {
                 <Route exact path="/" component={Landing}/>
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/register" component={Register}/>
-                <Route path="/company" component={CompanyProfile}/>
+                <Route exact path="/registerCompany" component={RegisterCompany}/>
+                <Route path="/companyProfile" component={CompanyProfile}/>
                 <Route path="/companyHome" component={CompanyHome}/>
                 <Route path="/jobPost" component={JobPost}/>
                 <Route path="/eventPost" component={EventPost}/>
@@ -35,6 +42,11 @@ export default class Main extends Component {
                 <Route path="/viewStudentProfile" component={StudentProfile}/>
                 <Route path="/studentExperience" component={StudentExperience}/>
                 <Route path="/studentEducation" component={StudentEducation}/>
+                <Route path="/jobs" component={Jobs}/>
+                <Route path="/events" component={Events}/>
+                <Route path="/applications" component={Applications}/>
+                <Route path="/editCompanyProfile" component={EditCompanyProfile}/>
+                <Route path="/registeredEvents" component={RegisteredEvents}/>
                 
             </div>
         )
