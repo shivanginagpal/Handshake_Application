@@ -17,10 +17,15 @@ import EditStudentProfileBasic from './student/EditStudentProfileBasic';
 import StudentProfile from './studentProfile/StudentProfile';
 import StudentExperience from './student/StudentExperience';
 import StudentEducation from './student/StudentEducation';
+import UploadImage from './common/UploadImage';
 import Jobs from './studentViews/Jobs';
 import Events from './studentViews/Events';
 import Applications from './studentViews/Applications';
 import RegisteredEvents from './studentViews/RegisteredEvents';
+import StudentsRegisteredEvent from './company/StudentRegisteredEvent';
+import StudentAppliedJobs from './company/StudentAppliedJobs';
+import CompanyViewStudentProfile from './company/CompanyViewStudentProfile';
+import ViewAllStudents from './common/ViewAllStudents';
 
 export default class Main extends Component {
     render() {
@@ -47,6 +52,11 @@ export default class Main extends Component {
                 <Route path="/applications" component={Applications}/>
                 <Route path="/editCompanyProfile" component={EditCompanyProfile}/>
                 <Route path="/registeredEvents" component={RegisteredEvents}/>
+                <Route path="/uploadImage" component={UploadImage}/>
+                <Route path="/studentsRegisteredEvent" component={StudentsRegisteredEvent}/>
+                <Route path="/studentAppliedJobs" component={StudentAppliedJobs}/>
+                <Route path="/companyViewStudentProfile" component={CompanyViewStudentProfile}/>
+                <Route path="/viewAllStudents" component={ViewAllStudents}/>
                 
             </div>
         )

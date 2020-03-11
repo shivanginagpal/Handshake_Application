@@ -35,6 +35,13 @@ class ProfStudentHeader extends Component {
                 )}
               </p>
               {isFieldEmpty(profile[0].city) ? null : <p>{profile[0].city} , {profile[0].state}</p>}
+              {isFieldEmpty(profile[0].major) ? null : <p>{profile[0].major} </p>}
+              <p className="lead text-center">
+                Skills{' '}:
+                {isFieldEmpty(profile[0].skill_set) ? null : (
+                  <span> {profile[0].skill_set}</span>
+                )}
+              </p>
             </div>
           </div>
         </div>

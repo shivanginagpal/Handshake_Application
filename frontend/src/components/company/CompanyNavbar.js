@@ -30,17 +30,25 @@ class CompanyNavbar extends Component{
     
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="/jobPost"> Jobs
+                <a className="nav-link" href="/jobPost"> Post Job
                 </a>
               </li>
             </ul>
 
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="/eventPost"> Events
+                <a className="nav-link" href="/eventPost"> Post Event
                 </a>
               </li>
             </ul>
+
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/ViewAllStudents"> Students
+                </a>
+              </li>
+            </ul>
+            
     
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">

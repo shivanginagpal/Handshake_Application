@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import Moment from 'react-moment';
-import { PropTypes } from 'prop-types';
-import { getStudentsForEvent } from '../../actions/companyActions'
-//import StudentsRegisteredEvent from '../eventPost/StudentsRegisteredEvent';
-import { createCompanyProfile } from '../../actions/profileActions';
+
 
 class CompanyAddedEvents extends Component {
 
     eventClick = (event_id) => {
         console.log("Came inside event-click");
-        this.props.getStudentsForEvent(event_id);
+        this.props.history.push({
+            pathname:"/studentsRegisteredEvent",
+            state:{
+                event_id:event_id
+            }
+           });
     }
 
     render() {
@@ -19,8 +21,6 @@ class CompanyAddedEvents extends Component {
         console.log("In Company Posted Events");
         console.log(this.props.companyevents.events);
         const { events } = this.props.companyevents;
-        // const { eventstudents } = this.props.studentevent;
-        //companyevents = Object.values(companyevents);
         let eventDetails = events.map((event) =>  (
                 <div>
                     <div class="card w-75" id="eventscard">
@@ -69,18 +69,4 @@ class CompanyAddedEvents extends Component {
     }
 }
 
-// CompanyAddedEvents.propTypes = {
-//     getStudentsForEvent: PropTypes.func.isRequired,
-//     auth: PropTypes.object.isRequired,
-//     profile: PropTypes.object.isRequired
-// };
-
-// const mapStateToProps = state => ({
-//     profile: state.profile,
-//     auth: state.auth,
-//     studentevent: state.studentevent,
-//     companyevents: state.companyevents
-// });
-
-//export default connect(mapStateToProps, { getStudentsForEvent })(CompanyAddedEvents);
 export default connect(null)(withRouter(CompanyAddedEvents))

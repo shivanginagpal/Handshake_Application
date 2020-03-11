@@ -21,8 +21,7 @@ export default class ApplicationFilter extends Component {
 
     async componentDidMount(){
         axios.defaults.withCredentials = true;  
-        console.log("in componentDidMount");
-        axios.defaults.withCredentials = true;  
+        console.log("in componentDidMount");  
         const userId = getID();
         const user ={"user_id":userId}
         console.log(userId);
@@ -66,8 +65,8 @@ export default class ApplicationFilter extends Component {
                 <div className="row">
             
                 
-                <div class="card w-30">
-                <div class="card-body">
+                {/* <div class="card w-30">
+                <div class="card-body"> */}
                 <h5 class="card-title">Filter</h5>
                 <form>
                 
@@ -108,8 +107,8 @@ export default class ApplicationFilter extends Component {
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-                </div>      
-            </div>
+                {/* </div>      
+            </div> */}
             <div className="container">
             {appliedJobs}
             </div>

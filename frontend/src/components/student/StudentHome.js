@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import StudentNavbar from "./StudentNavbar";
+import StudentNavbar from './StudentNavbar';
+import InsideNavbar from '../studentViews/InsideNavbar';
+import JobFilter from '../studentViews/JobFilter';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/profileActions';
-import StudentProfileAction from './StudentProfileAction';
+
 
 class StudentHome extends Component {
         componentDidMount() {
@@ -17,16 +19,18 @@ class StudentHome extends Component {
         const { user } = this.props.auth;
         const { profile, loading } = this.props.profile;
         let dashboardcontent;
+        let home = {home: "Job Search"};
         if (profile === null || loading){
           dashboardcontent = <h4>Loading...</h4>
         }else{
           if (Object.keys(profile).length > 0 ){
             dashboardcontent = (
               <div>
+                {/* <InsideNavbar links={home}/> */}
                 <p className="lead text-muted">
-                  Welcome {user.first_name}
+                  Welcome {user.first_name}, Latest Job Posting are listed!
                 </p>
-                <StudentProfileAction />
+                <JobFilter />
                 {/* <Experience experience={profile.experience} />
                 <Education education={profile.education} />
                 <div style={{ marginBottom: '60px' }} />

@@ -45,7 +45,7 @@ class ProfStudentExperience extends Component {
    
     return (
       <div className="row">
-      <div className="col-md-6">
+      <div className="col-md-12">
         <h3 className="text-center text-info">Experience</h3>
         {expItems.length > 0 ? (
           <ul className="list-group">{expItems}</ul>

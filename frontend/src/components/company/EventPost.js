@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { getID } from "../auth/HelperApis";
 import CompanyNavbar from "./CompanyNavbar";
+import { Redirect } from 'react-router-dom';
 
 class eventPost extends Component {
     constructor() {
@@ -13,6 +14,7 @@ class eventPost extends Component {
             location : '',
             time : '',
             eligibility: '',
+            redir: false,
             errors: {}
         };
         this.onChange = this.onChange.bind(this);
@@ -40,13 +42,21 @@ class eventPost extends Component {
         console.log(newEventPost);
         axios
         .post('http://localhost:5000/addEventPost', newEventPost)
-        .then(res=>console.log(res.data))
+        .then(res=>{
+            this.setState({redir:true})
+                }
+            )
         .catch(err=> this.setState({errors: err.response.data}));
     }
 
     render() {
+        let redirectVal = null;
+        if(this.state.redir == true){
+            redirectVal = <Redirect to="/companyHome"/>;
+        }
         return (
             <div>
+            {redirectVal}
             <CompanyNavbar/>
             <div className="container">
             <div className="col-md-8 m-auto">

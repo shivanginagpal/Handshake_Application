@@ -19,6 +19,10 @@ var getCompanyProfileDetails = require('./routes/api/getCompanyProfile');
 var getStudentDetailsForJob = require('./routes/api/jobPosts');
 var registerEvent = require('./routes/api/eventPosts');
 var applyForJob = require('./routes/api/jobPosts')
+var getRegisteredStudentDetails = require('./routes/api/eventPosts');
+var getListOfStudentAppliedForJob = require('./routes/api/jobPosts');
+var updateAppliedJob = require('./routes/api/jobPosts');
+var viewAllStudents = require('./routes/api/studentSearch')
 
 var dbConnection = require('./models/dbConnectionPool');
 
@@ -71,6 +75,10 @@ app.use('/',getCompanyProfileDetails);
 app.use('/',getStudentDetailsForJob);
 app.use('/',registerEvent);
 app.use('/',applyForJob);
+app.use('/',getRegisteredStudentDetails);
+app.use('/',getListOfStudentAppliedForJob);
+app.use('/',updateAppliedJob);
+app.use('/',viewAllStudents);
 
 app.get('/',(req,res) => res.send('Hello World!!'));
 

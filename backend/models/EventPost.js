@@ -149,7 +149,49 @@ var registerEvent = async (event_info) => {
       };
     }
   };
+
+  var getRegisteredStudentDetails = async(event_id) => {
+    let conn;
+    let message = "";
+    let status = false;
+    try{
+        console.log("In get event mysql");
+        conn = await dbConnection();
+        if(conn){
+            await conn.query("START TRANSACTION");
+                console.log("DB: Get students for a event");
+             
+                var studentsForEvent = await conn.query(`SELECT student_register.id as student_id, student_register.first_name, 
+                student_register.last_name 
+                FROM student_register INNER JOIN events_registered
+                ON student_register.id = events_registered.student_id 
+                where events_registered.event_id =${event_id}`);
+
+                await conn.query("COMMIT");
+               console.log(studentsForEvent);
+                message = "Student retrieved successfully!";
+                status = true;
+                console.log(message);
+        }
+    }catch(e){
+        console.log(e);
+        message = "Error! Please restart the system";
+        status = false;
+    }
+    finally{
+        if(conn){
+            await conn.release();
+            await conn.destroy();
+        }
+        return {
+            status : status,
+            message : message,
+            studentsForEvent:studentsForEvent
+        };
+    }
+}
 module.exports={addEventPost, 
             getEventDetails, 
             registerEvent,
-            studentRegisteredEvents};
+            studentRegisteredEvents,
+            getRegisteredStudentDetails};

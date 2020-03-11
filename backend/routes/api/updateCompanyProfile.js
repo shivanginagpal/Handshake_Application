@@ -36,7 +36,7 @@ router.post('/updateCompanyProfile', async (req,res)=>{
 
 });
 
-router.post('/updateCompanyProfilePic',helper.upload.single('img'), async (req,res)=>{
+router.post('/updateCompanyProfilePic',helper.upload.single('file'), async (req,res)=>{
     console.log("In Update company profile picture");
     console.log(req.body);
     let company_id = req.body.id;

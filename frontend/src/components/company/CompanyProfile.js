@@ -40,8 +40,13 @@ class CompanyProfile extends Component {
               </Link>
               </div>
              <div className="navbar-nav ml-auto">
-              <Link to="/EditCompanyProfile" className="btn btn-light">
+              <Link to="/editCompanyProfile" className="btn btn-light">
              <i className="fas fa-user-circle text-info mr-1" /> Edit Profile
+             </Link>
+             </div>
+             <div className="navbar-nav">
+             <Link to="/uploadImage" className="btn btn-light">
+             <i className="fas fa-file-image text-info mr-1" /> Upload Image
              </Link>
              </div>
             <div className="col-md-6" />

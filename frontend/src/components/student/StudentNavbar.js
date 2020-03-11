@@ -50,6 +50,13 @@ class StudentNavbar extends Component{
                 </a>
               </li>
             </ul>
+
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <a className="nav-link" href="/ViewAllStudents"> Students
+                </a>
+              </li>
+            </ul>
     
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">

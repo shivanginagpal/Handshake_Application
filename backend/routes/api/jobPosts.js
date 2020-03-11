@@ -158,4 +158,46 @@ router.post("/applyForJob",helper.uploadResumeFile.single('file'),async (req,res
         }
 });
 
+router.get('/getListOfStudentAppliedForJob',async function(req,res) {
+    var responseObj={};
+    try{
+        console.log("In router getListOfStudentAppliedForJob");
+        console.log(req.query);
+        let job_id = req.query.job_id;
+        responseObj=await jobPost.getListOfStudentAppliedForJob(job_id);
+        console.log(responseObj);
+    }
+    catch(e) {
+        console.log(e);
+        responseObj.status = false;
+    } finally{
+        res.status(200).json({
+            ...responseObj
+        });
+    }
+});
+
+router.post('/updateAppliedJob', async function (req,res){
+    let {student_id, app_status,job_id}=req.body;
+    console.log(req.body);
+    var responseObj = {};
+    console.log("In updateAppliedJobs route");
+    try{
+        var updateAppliedJob={
+            student_id:student_id,
+            job_id:job_id,
+            app_status : app_status
+        }
+        console.log("Before calling models updateAppliedJobs");
+        responseObj=await jobPost.updateAppliedJob(updateAppliedJob);
+    }
+    catch(e){
+        console.log(e);
+        responseObj.status=false;
+    }
+    finally{
+        res.status(200).json({...responseObj});
+    }
+});
+
 module.exports=router;

@@ -22,6 +22,7 @@ router.post("/updateStudentBasic", async function(req,res){
         "first_name": req.body.first_name,
         "last_name" : req.body.last_name,
         "email"     : req.body.email,
+        "major"     : req.body.major,
         "dob"       : req.body.dob,
         "city"      : req.body.city,
         "state"     : req.body.state,
@@ -119,7 +120,7 @@ router.post("/updateStudentWorkExp", async (req, res) => {
     }
 });
 
-router.post('/updateStudentProfilePic',helper.upload.single('img'), async (req,res)=>{
+router.post('/updateStudentProfilePic',helper.upload.single('file'), async (req,res)=>{
     console.log("In Update student profile picture");
     console.log(req.body);
     let student_id = req.body.id;

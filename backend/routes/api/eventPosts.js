@@ -96,4 +96,23 @@ router.post("/registerEvent", async (req, res) => {
     }
   });
   
+  router.get('/getRegisteredStudentDetails',async function(req,res) {
+    var responseObj={};
+    try{
+        console.log("In router");
+        console.log(req.query);
+        let event_id = req.query.event_id;
+        responseObj=await eventPost.getRegisteredStudentDetails(event_id);
+        console.log(responseObj);
+    }
+    catch(e) {
+        console.log(e);
+        responseObj.status = false;
+    } finally{
+        res.status(200).json({
+            ...responseObj
+        });
+    }
+});
+
 module.exports=router;

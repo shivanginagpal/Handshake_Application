@@ -10,6 +10,7 @@ module.exports = function validateUpdateBasic(data) {
   data.state = !isEmpty(data.state) ? data.state : "";
   data.country = !isEmpty(data.country) ? data.country : "";
   data.email = !isEmpty(data.email) ? data.email : "";
+  data.major = !isEmpty(data.major) ? data.major : "";
   data.phone_num = !isEmpty(data.phone_num) ? data.phone_num : "";
   data.skill_set = !isEmpty(data.skill_set) ? data.skill_set : "";
   careerObj = !isEmpty(data.career_obj) ? data.careero_bj : "";
@@ -45,6 +46,9 @@ module.exports = function validateUpdateBasic(data) {
   }
   if (!Validator.isEmail(data.email)) {
     errors.email = "Email is Invalid";
+  }
+  if (Validator.isEmpty(data.major)) {
+    errors.major = "This field is required";
   }
   if (Validator.isEmpty(data.state)) {
     errors.state = "This field is required";

@@ -34,13 +34,15 @@ class ProfStudentEducation extends Component {
          ));
        
         return (
-            <div className="col-md-6">
+          <div className="row">
+            <div className="col-md-12">
           <h3 className="text-center text-info">Education</h3>
           {eduItems.length > 0 ? (
             <ul className="list-group">{eduItems}</ul>
           ) : (
             <p className="text-center">No Education Listed</p>
           )}
+        </div>
         </div>
         )
        

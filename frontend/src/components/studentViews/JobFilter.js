@@ -10,7 +10,7 @@ class JobFilter extends Component {
     super();
     this.state = {
       jobs: [],
-      keyword: "",
+      Keyword1: "",
       location: "",
       modal: false,
       modal1: false,
@@ -29,7 +29,7 @@ class JobFilter extends Component {
       console.log("in componentDidMount");
 
       //List of all jobs posted
-        const id = getID();
+      const id = getID();
       console.log(id);
       
       await axios.post('/getUnappliedJobDetails',{"user_id":id} )
@@ -54,7 +54,7 @@ class JobFilter extends Component {
    async onSubmit(e) {
         e.preventDefault();
         const jobSearch = {
-            keyword: this.state.keyword,
+            Keyword1: this.state.Keyword1,
             location: this.state.location,
         };
         console.log(jobSearch);
@@ -203,13 +203,13 @@ class JobFilter extends Component {
         <form onSubmit={this.onSubmit} className="container">
           <div className="form-row align-items-center">
             <div className="form-group col-md-4">
-              {/* <label className="sr-only" for="inlineFormInput">Keyword</label> */}
+              {/* <label className="sr-only" for="inlineFormInput">Keyword1Keyword1</label> */}
               <input
                 type="text"
                 className="form-control mb-2"
-                name="keyword"
+                name="Keyword1"
                 placeholder="Search Employers, Jobs, Keywords.."
-                value={this.state.keyword}
+                value={this.state.Keyword1}
                 onChange={this.onChange}
               />
             </div>

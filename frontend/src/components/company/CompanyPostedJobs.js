@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import StudentsAppliedJob from '../jobPost/StudentsAppliedJob';
 import Moment from 'react-moment';
-import { PropTypes } from 'prop-types';
 import { withRouter } from "react-router-dom";
-import { getStudentsForJob } from '../../actions/companyActions'
 import { connect } from 'react-redux';
 
 
 class CompanyPostedJobs extends Component {
-
     jobClick = (job_id) => {
         console.log("Came inside job-click");
-        this.props.getStudentsForJob(job_id);
+        console.log(job_id);
+
+        this.props.history.push({
+            pathname:"/studentAppliedJobs",
+            state:{
+                job_id:job_id
+            }
+        });
     }
     render() {
         console.log("In Company Posted Jobs");
@@ -20,7 +23,6 @@ class CompanyPostedJobs extends Component {
 
         console.log(this.props);
        
-        const { jobstudents } = this.props;
        
         let jobDetails = jobs.map(job => (
                 <div>
@@ -52,7 +54,6 @@ class CompanyPostedJobs extends Component {
                             </div>
                         </div>
                     </div>
-                    <StudentsAppliedJob jobstudents={jobstudents} />
                 </div>
         ))
         return (
@@ -76,18 +77,7 @@ class CompanyPostedJobs extends Component {
     }
 }
 
-CompanyPostedJobs.propTypes = {
-    getStudentsForJob: PropTypes.func.isRequired,
-    auth: PropTypes.object.isRequired,
-    //profile: PropTypes.object.isRequired
-};
 
-const mapStateToProps = state => ({
-    //profile: state.profile,
-    auth: state.auth,
-    jobstudents: state.jobstudents,
-    //companyjobs: state.companyjobs
-});
 
-export default connect(mapStateToProps, { getStudentsForJob })(withRouter(CompanyPostedJobs));
-//export default connect(null)(withRouter(CompanyPostedJobs))
+//export default connect(mapStateToProps, { getStudentsForJob })(withRouter(CompanyPostedJobs));
+export default connect(null)(withRouter(CompanyPostedJobs))

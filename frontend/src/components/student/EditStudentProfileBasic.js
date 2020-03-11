@@ -20,6 +20,7 @@ import StudentNavbar from "./StudentNavbar";
        country: "",
        career_obj: "",
        email: "",
+       major: "",
        phone_num: "",
        skill_set: "",
        errors: {}
@@ -49,6 +50,7 @@ import StudentNavbar from "./StudentNavbar";
        profile.state = !isFieldEmpty(profile.state) ? profile.state : '';
        profile.country = !isFieldEmpty(profile.country) ? profile.country : '';
        profile.email = !isFieldEmpty(profile.email) ? profile.email : '';
+       profile.major = !isFieldEmpty(profile.major) ? profile.major : '';
        profile.phone_num = !isFieldEmpty(profile.phone_num) ? profile.phone_num : '';
        profile.skill_set = !isFieldEmpty(profile.skill_set) ? profile.skill_set : '';
        profile.career_obj = !isFieldEmpty(profile.career_obj) ? profile.career_obj : '';
@@ -61,6 +63,7 @@ import StudentNavbar from "./StudentNavbar";
          state: profile.state,
          country: profile.country,
          email: profile.email,
+         major: profile.major,
          phone_num: profile.phone_num,
          skill_set: profile.skill_set,
          career_obj: profile.career_obj
@@ -80,6 +83,7 @@ import StudentNavbar from "./StudentNavbar";
           country: this.state.country,
           career_obj: this.state.career_obj,
           email: this.state.email,
+          major: this.state.major,
           phone_num: this.state.phone_num,
           skill_set: this.state.skill_set,
           id :id 
@@ -158,6 +162,13 @@ import StudentNavbar from "./StudentNavbar";
                    value={this.state.email}
                    onChange={this.onChange}
                    error={errors.email}
+                 />
+                 <TextFieldGroup
+                   placeholder="major"
+                   name="major"
+                   value={this.state.major}
+                   onChange={this.onChange}
+                   error={errors.major}
                  />
                  <TextFieldGroup
                    placeholder="Phone Number"

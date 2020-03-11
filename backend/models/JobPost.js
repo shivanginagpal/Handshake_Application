@@ -2,7 +2,6 @@ const dbConnection = require('./dbConnectionPool');
 
 var addJobPost =  async (jobDetails) =>{
     let conn;
-   // let insertId = -1;
     let message = "";
     let status = false;
     try{
@@ -128,7 +127,7 @@ var getStudentDetailsForJob = async(job_id) => {
             await connection.query("START TRANSACTION");
                 console.log("Get students-for a job");
              
-                var students = await connection.query('SELECT handshake.student_register.student_id, handshake.student_register.first_name, handshake.student_register.last_name, handshake.applied_jobs.app_status FROM handshake.student_register INNER JOIN handshake.applied_jobs ON handshake.student_register.student_id = handshake.applied_jobs.student_id where handshake.applied_jobs.job_id = ' + job_id);
+                var students = await connection.query('SELECT student_register.student_id, student_register.first_name, student_register.last_name, applied_jobs.app_status FROM student_register INNER JOIN applied_jobs ON student_register.student_id = applied_jobs.student_id where applied_jobs.job_id = ' + job_id);
                 await connection.query("COMMIT");
                console.log(students);
                 message = "Student retrieved successfully!";
@@ -205,7 +204,8 @@ var getAppliedJobDetails= async(id) => {
                 var jobs = await conn.query(`SELECT job_title, company_name, app_status, date_applied, app_deadline 
                 FROM job_post JOIN applied_jobs 
                 WHERE applied_jobs.job_id = job_post.job_id 
-                AND applied_jobs.student_id=${id}`);
+                AND applied_jobs.student_id=${id}
+                order by date_applied`);
                 await conn.query("COMMIT");
                 console.log(jobs);
                 message = "Job retrieved successfully!";
@@ -243,9 +243,10 @@ var getUnappliedJobDetails= async(id) => {
                 console.log("Unapplied jobs");
 
                 var jobs = await conn.query(`SELECT job_title, company_name, app_deadline, 
-                location, salary, job_description, job_category, job_id
+                location, salary, job_description, job_category, job_id, posting_date
                 FROM job_post AS B WHERE B.job_id NOT IN 
-                (Select job_id from applied_jobs as A where A.student_id=${id})`);
+                (Select job_id from applied_jobs as A where A.student_id=${id}) 
+                order by posting_date DESC`);
                 await conn.query("COMMIT");
                 console.log(jobs);
                 message = "Job retrieved successfully!";
@@ -344,6 +345,86 @@ var applyForJob = async (inputData) => {
       }
   }
 
+var getListOfStudentAppliedForJob = async(job_id) => {
+
+    let conn;
+    let message = "";
+    let status = false;
+    try{
+        console.log("DB: getListOfStudentAppliedForJob");
+        conn = await dbConnection();
+        if(conn){
+            await conn.query("START TRANSACTION");
+                console.log("Get students list for a job");
+            
+                var studentsForJob = await conn.query(`SELECT student_register.id as student_id, student_register.first_name,
+                 student_register.last_name, applied_jobs.app_status 
+                 FROM student_register INNER JOIN applied_jobs 
+                 ON student_register.id = applied_jobs.student_id 
+                 where applied_jobs.job_id =${job_id}`);
+                await conn.query("COMMIT");
+                console.log(studentsForJob);
+                message = "Student retrieved successfully!";
+                status = true;
+                console.log(message);
+        }
+    }catch(e){
+        console.log(e);
+        message = "Error! Please restart the system";
+        status = false;
+    }
+    finally{
+        if(conn){
+            await conn.release();
+            await conn.destroy();
+        }
+        return {
+            status : status,
+            message : message,
+            studentsForJob:studentsForJob
+        };
+    }
+}
+
+var updateAppliedJob = async (updateAppliedJob) => {
+    let connection;
+    let staus = false;
+    let message = "";
+    try {
+        console.log("DB:In update applied Job ");
+        console.log(updateAppliedJob);
+        connection = await dbConnection();
+        if (connection) {
+            await connection.query("START TRANSACTION");
+            console.log("Update an applied job");
+            console.log(updateAppliedJob.app_status)
+            await connection.query(`UPDATE applied_jobs SET app_status='${updateAppliedJob.app_status}' 
+                                WHERE student_id=${updateAppliedJob.student_id}  
+                                AND job_id=${updateAppliedJob.job_id}`);
+            await connection.query("COMMIT");
+            status=true;
+            message = "Applied Job Updated Successfully!"
+            console.log(message);
+        }
+    }
+    catch (e) {
+        console.log(e);
+        message = "Error! Please restart the system.";
+        status = false;
+    }
+    finally {
+        if (connection) {
+            await connection.release();
+            await connection.destroy();
+        }
+
+    }
+    return {
+        status: status,
+        message: message
+    }
+}
+
 module.exports={addJobPost, 
     getJobDetails,
     getJobDetailsCompany, 
@@ -351,5 +432,7 @@ module.exports={addJobPost,
     getSearchedJobDetails,
     getAppliedJobDetails,
     getUnappliedJobDetails,
-    applyForJob
-    };
+    applyForJob,
+    getListOfStudentAppliedForJob,
+    updateAppliedJob
+};

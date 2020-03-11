@@ -22,4 +22,20 @@ router.post("/filterStudents", async function(req, res){
     }
 });
 
+router.get("/viewAllStudents", async function(req, res){
+    console.log("get students list..");
+    var resp = {};
+    try {
+        console.log("get students list..");
+        resp = await student.viewAllStudents();
+    } catch(e) {
+        console.log(e);
+        resp.status = false;
+    } finally{
+        res.status(200).json({
+            ...resp
+        });
+    }
+});
+
 module.exports = router;

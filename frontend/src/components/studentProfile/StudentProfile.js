@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import ProfStudentHeader from './ProfStudentHeader';
 import ProfStudentEducation from './ProfStudentEducation';
 import ProfStudentExperience from './ProfStudentExperience';
+import StudentProfileAction from '../student/StudentProfileAction';
 
 import {getCurrentProfile, getStudentEducation, getStudentExperience } from '../../actions/profileActions';
 import StudentNavbar from "../student/StudentNavbar";
@@ -46,11 +46,7 @@ componentDidMount() {
     profileContent = (
         <div>
           <div className="row">
-            <div className="col-md-6">
-              <Link to="/studentHome" className="btn btn-light mb-3 float-left">
-                Back To Home
-              </Link>
-            </div>
+              <StudentProfileAction />
             <div className="col-md-6" />
           </div>
           <ProfStudentHeader profile={profile} />

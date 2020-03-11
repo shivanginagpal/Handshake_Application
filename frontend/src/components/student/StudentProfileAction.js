@@ -15,6 +15,10 @@ const StudentProfileAction = () => {
         <i className="fas fa-graduation-cap text-info mr-1" />
         Add Education
       </Link>
+      <Link to="/uploadImage" className="btn btn-light">
+        <i className="fas fa-file-image text-info mr-1" />
+        Upload Image
+      </Link>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { getID } from "../auth/HelperApis";
 import CompanyNavbar from "./CompanyNavbar";
+import { Redirect } from 'react-router-dom';
 
 class jobPost extends Component {
     constructor() {
@@ -14,7 +15,7 @@ class jobPost extends Component {
             location: '',
             job_description: '',
             job_category: '',
-            //id: '',
+            redir:false,
             errors: {}
         };
         this.onChange = this.onChange.bind(this);
@@ -44,13 +45,20 @@ class jobPost extends Component {
         console.log(newJobPost);
         axios
         .post('http://localhost:5000/addJobPost', newJobPost)
-        .then(res=>console.log(res.data))
+        .then(res=>{
+            console.log(res.data);
+            this.setState({redir:true})})
         .catch(err=> this.setState({errors: err.response.data}));
     }
 
     render() {
+        let redirectVal = null;
+        if(this.state.redir == true){
+            redirectVal = <Redirect to="/companyHome"/>;
+        }
         return (
             <div>
+            {redirectVal}
             <CompanyNavbar/>
             <div className="container">
             <div className="col-md-8 m-auto">
