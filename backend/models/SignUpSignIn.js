@@ -5,7 +5,6 @@ const dbConnection = require('./dbConnectionPool');
 
 var signUpStudent =  async (studentData) =>{
     let conn;
-    let insertId = -1;
     let message = "";
     let status = false;
     try{
@@ -49,7 +48,6 @@ var signUpStudent =  async (studentData) =>{
 
 var signUpCompany =  async (companyData) =>{
     let conn;
-    let insertId = -1;
     let message = "";
     let status = false;
     try{
@@ -113,8 +111,6 @@ var signIn = async (userData)=>{
         await conn.query('COMMIT');
         if(result.length > 0){
             let dbPassword = result[0]["password"];
-            console.log("user password.."+password);
-            console.log("dbPassword.."+dbPassword);
             if(password == dbPassword){
                 message = "Logged in successfully";
                 let userID = result[0]['id'];
@@ -123,7 +119,7 @@ var signIn = async (userData)=>{
                 let lname = userType=="student" ? result[0]['last_name']:result[0]['company_name'];
 
                 payload = { id: userID, img : userProPic, first_name: fname, last_name: lname, userType: userType }
-                console.log(payload);
+                //console.log(payload);
                 //JWT token
                 token = jwt.sign(payload, keys.secret, {expiresIn:3600});
                 status = true;

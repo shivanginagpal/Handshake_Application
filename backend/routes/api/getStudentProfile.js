@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 //Load jobPosts Model
 const student = require('../../models/GetStudentProfile');
+const fs = require("fs");
+const path = require("path");
 
 router.get('/getStudentProfile', async (req, res) => {
     console.log("inside profile get request");
@@ -54,5 +56,27 @@ router.get('/getStudentExperience', async (req, res) => {
         });
     } 
 });
+
+//download-file
+router.get("/downloadProfileImg/:user_image", (req, res) => {
+    var image = path.join(__dirname + "/../../uploads/profilepics", req.params.user_image);
+    console.log("image", image)
+    if (fs.existsSync(image)) {
+      res.sendFile(image);
+    } else {
+      res.end("image not found");
+    }
+  });
+
+  //download-file
+router.get("/downloadResume/:user_resume", (req, res) => {
+    var resume = path.join(__dirname + "/../../uploads/resume", req.params.user_resume);
+    console.log("resume", resume)
+    if (fs.existsSync(resume)) {
+      res.sendFile(resume);
+    } else {
+      res.end("resume not found");
+    }
+  });
 
 module.exports = router;

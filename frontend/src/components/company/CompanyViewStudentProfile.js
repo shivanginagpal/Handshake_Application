@@ -27,30 +27,31 @@ class CompanyViewStudentProfile extends Component {
         const { profile=[], loading } = this.props.profile;
         const { education=[], eduLoading } = this.props.education;
         const { experience=[], expLoading } = this.props.experience;
-        
-        console.log("Profile:")
-        console.log(profile);
-        console.log(" Edu loading value:", eduLoading);
-        console.log(education);
-        console.log("Exp loading value:", expLoading);
-        console.log(experience);
 
         let profileContent;
         if (profile === null || loading || education === null || eduLoading ||
             experience === null || expLoading) {
             profileContent = "Student Profile will be displayed below:";
           } else {
-          profileContent = (
-              <div>
-                <Link to="/companyHome" className="btn btn-light mb-3 float-left">
-                Back To Home
-                </Link>
-                <div className="col-md-6" />
-                <ProfStudentHeader profile={profile} />
-                <ProfStudentEducation education={education}/>
-                <ProfStudentExperience experience={experience} />
-                
-              </div>
+            profileContent = (
+            <div>
+                <div className="row">
+                <div className="col-md-6">
+                    <Link to="/CompanyHome" className="btn btn-light mb-3 float-left">
+                      Back To Home
+                    </Link>
+                    </div>
+                  <div className="navbar-nav ml-auto">
+                      <Link to="/viewStudentResume" className="btn btn-light">
+                      <i className="fas fa-file-image text-info mr-1" /> View Resume
+                      </Link>
+                  </div>
+                  <div className="col-md-6" />
+                </div>
+                      <ProfStudentHeader profile={profile} />
+                      <ProfStudentEducation education={education}/>
+                      <ProfStudentExperience experience={experience} />
+                </div>
             );
           }
       

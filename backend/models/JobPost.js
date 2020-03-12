@@ -165,6 +165,7 @@ var getSearchedJobDetails = async(keyword,location) => {
                 var jobs = await conn.query(`SELECT * FROM job_post WHERE job_description LIKE '${keyword}' OR
                 job_title LIKE '${keyword}' OR
                 job_category LIKE '${keyword}' OR
+                company_name LIKE '${keyword}' OR
                 location like '${location}'`);
                 await conn.query("COMMIT");
                 console.log(jobs);

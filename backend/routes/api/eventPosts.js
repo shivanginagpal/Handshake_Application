@@ -11,7 +11,7 @@ router.post("/addEventPost", async function(req, res){
     let{company_id, event_name, location, date_of_event, event_description, time, eligibility} = req.body;
     var responseObj = {};
     console.log("In EventPosts route");
-    console.log(req.body);
+    //console.log(req.body);
     //change the order in which date is being entered into the database
     try {  
         let eventDetails = {
@@ -24,7 +24,7 @@ router.post("/addEventPost", async function(req, res){
             eligibility: eligibility
         };
         console.log("before calling models eventPosts");
-        console.log(eventDetails);
+        //console.log(eventDetails);
         responseObj = await eventPost.addEventPost(eventDetails);
         
     } catch(e) {

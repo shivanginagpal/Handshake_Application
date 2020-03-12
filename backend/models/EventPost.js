@@ -11,7 +11,7 @@ var addEventPost =  async (eventDetails) =>{
         if(connection){
             await connection.query("START TRANSACTION");
                 console.log("New event-post");
-                console.log(eventDetails);
+                //console.log(eventDetails);
                 await  connection.query('INSERT INTO event_post SET ?', [eventDetails]);
                 await connection.query("COMMIT");
                 message = "Event posted successfully!";
@@ -113,7 +113,7 @@ var getEventDetails = async(user_id,user_type) => {
         return {
             status : status,
             message : message,
-            events:events
+            events : events
         };
     }
 }
@@ -126,13 +126,23 @@ var registerEvent = async (event_info) => {
       conn = await dbConnection();
       if (conn) {
         await conn.query("START TRANSACTION");
-        await conn.query("INSERT INTO events_registered SET ?", [
-            event_info
-        ]);
+        let check = await conn.query(`Select eligibility from event_post where event_id=${event_info.event_id} 
+        and eligibility 
+        Like (Select major from student_register where id=${event_info.student_id})`);
+        console.log(check.length);
+        if(check.length>0){
+            await conn.query("INSERT INTO events_registered SET ?",[event_info]);
+            msg = "Event Registered successfully!";
+            status = true;
+            console.log(msg);
+        }else{
+            msg = "Unable to register";
+            status = false;
+            console.log(msg);
+
+        }
         await conn.query("COMMIT");
-        msg = "Event Registered successfully!";
-        status = true;
-        console.log(msg);
+        
       }
     } catch (e) {
       console.log(e);

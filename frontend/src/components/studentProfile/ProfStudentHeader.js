@@ -11,7 +11,10 @@ class ProfStudentHeader extends Component {
     const { profile } = this.props;
     console.log(typeof profile);
     console.log(profile[0].email);
-
+    let imgSource = isFieldEmpty(profile[0].profile_pic)?
+   "https://static.change.org/profile-img/default-user-profile.svg":
+  "http://localhost:5000" + "/downloadProfileImg/" + profile[0].profile_pic;
+  
     return (
       <div className="row">
         <div className="col-md-12">
@@ -20,7 +23,7 @@ class ProfStudentHeader extends Component {
               <div className="col-4 col-md-3 m-auto">
                 <img
                   className="rounded-circle"
-                  //src={profile.user.avatar}
+                  src = {imgSource}
                   alt=""
                 />
               </div>

@@ -143,7 +143,8 @@ router.post("/applyForJob",helper.uploadResumeFile.single('file'),async (req,res
         let inputData = {
                 "job_id" : req.body.job_id,
                 "student_id" : req.body.student_id,
-                "resume_file" : filename
+                "resume_file" : filename,
+                "app_status" : 'Pending'
             }
             responseObj = await jobPost.applyForJob(inputData);
             console.log(responseObj);

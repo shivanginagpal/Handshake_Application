@@ -21,7 +21,7 @@ class JobFilter extends Component {
       errors: {}
     };
     this.onChange = this.onChange.bind(this);
-    //this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   async componentDidMount(){
@@ -49,7 +49,6 @@ class JobFilter extends Component {
     onChange(e) {
         this.setState({ [e.target.name]: e.target.value });
     }
-    
 
    async onSubmit(e) {
         e.preventDefault();

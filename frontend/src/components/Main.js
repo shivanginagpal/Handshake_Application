@@ -26,6 +26,7 @@ import StudentsRegisteredEvent from './company/StudentRegisteredEvent';
 import StudentAppliedJobs from './company/StudentAppliedJobs';
 import CompanyViewStudentProfile from './company/CompanyViewStudentProfile';
 import ViewAllStudents from './common/ViewAllStudents';
+import ViewStudentResume from './company/ViewStudentResume';
 
 export default class Main extends Component {
     render() {
@@ -57,6 +58,7 @@ export default class Main extends Component {
                 <Route path="/studentAppliedJobs" component={StudentAppliedJobs}/>
                 <Route path="/companyViewStudentProfile" component={CompanyViewStudentProfile}/>
                 <Route path="/viewAllStudents" component={ViewAllStudents}/>
+                <Route path="/viewStudentResume" component={ViewStudentResume}/>
                 
             </div>
         )

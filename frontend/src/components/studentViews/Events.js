@@ -69,15 +69,27 @@ class Events extends Component {
     console.log(registerEvent);
     axios
       .post("/registerEvent", registerEvent)
-      .then(res =>
-        swal({
-          title: "Congratulations!",
-          text: "You Successfully registered for the Event!",
-          icon: "success",
-          button: "OK"
-        }).then(() => {
-          window.location.reload();
+      .then(res => {
+        console.log(res.data.status);
+        if (res.data.status === true){
+          swal({
+            title: "Congratulations!",
+            text: "You Successfully registered for the Event!",
+            icon: "success",
+            button: "OK"
+          }).then(() => {
+            window.location.reload();
+          })
+        }else{
+          swal({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You are not eligible to register for this event!',
+            button: "OK"
+          }).then(() => {
+            window.location.reload();
         })
+      }}
       )
       .catch(error => console.log(error.response.data));
   };
@@ -90,9 +102,12 @@ class Events extends Component {
     );
     let eventsList = this.state.events.map(viewevent => {
       if (
-        viewevent.company_name
+          (viewevent.company_name
           .toUpperCase()
-          .includes(this.state.searchString.toUpperCase())
+          .includes(this.state.searchString.toUpperCase())) || 
+          (viewevent.event_name
+          .toUpperCase()
+          .includes(this.state.searchString.toUpperCase()))
       ) {
         return (
           <div className="card w-100" id="eventscard">

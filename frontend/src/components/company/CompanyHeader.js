@@ -6,6 +6,9 @@ class CompanyHeader extends Component {
     console.log(this.props);
     const { companyDetails } = this.props.profile;
     console.log(companyDetails[0]);
+    let imgSource = isFieldEmpty(companyDetails[0].profile_pic)?
+      "https://static.change.org/profile-img/default-user-profile.svg":
+      "http://localhost:5000" + "/downloadProfileImg/" + companyDetails[0].profile_pic;
 
     return (
       <div className="row">
@@ -15,7 +18,7 @@ class CompanyHeader extends Component {
               <div className="col-4 col-md-3 m-auto">
                 <img
                   className="rounded-circle"
-                  //src={profile.user.avatar}
+                  src={imgSource}
                   alt=""
                 />
               </div>

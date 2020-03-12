@@ -15,6 +15,17 @@ import "../../App.css";
    searchChangeHandler(e) {
      this.setState({ searchString: e.target.value });
    }
+
+   reply_click = (student_id) => {
+    console.log(student_id);
+    this.props.history.push({
+      pathname: "/companyViewStudentProfile",
+      state: {
+        student_id: student_id
+      }
+    });
+  }
+
    componentDidMount(){
        axios("/viewAllStudents",{
            method: "get"
@@ -41,19 +52,26 @@ import "../../App.css";
            ) {
                return (
                  <tr>
-                   <td>{student.first_name}</td>
+                   <td>{student.first_name}
+                   
+                   </td>
                    <td>{student.last_name}</td>
                    <td>{student.school}</td>
                    <td>{student.skill_set}</td>
                    <td>{student.major}</td>
+                   
+                   
                    <td>
+                   {<a href="#" onClick={() => this.reply_click(student.id)}> View Profile</a>}
+                   </td>
+                   {/* <td>
                      <input
                        type="button"
                        className="btn btn-primary btn-sm"
                        //onClick={}
                        value="view Profile"
                      />
-                   </td>
+                   </td> */}
                  </tr>
                );
            }
@@ -79,6 +97,7 @@ import "../../App.css";
                >
                  Search
                </button> */}
+               
              </form>
            </nav>
            <div className="row justify-content-center align-items-center">

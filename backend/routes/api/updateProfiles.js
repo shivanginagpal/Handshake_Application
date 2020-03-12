@@ -132,7 +132,7 @@ router.post('/updateStudentProfilePic',helper.upload.single('file'), async (req,
         resp = await profile.updateProfilePic(role,profile_pic,student_id);
         if (resp.status) {
             console.log("Pic uploaded");
-          }
+        }
     }
     catch (e) {
         resp.status = false;
