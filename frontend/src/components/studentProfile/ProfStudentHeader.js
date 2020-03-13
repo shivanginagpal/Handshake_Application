@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {isFieldEmpty} from "../auth/HelperApis";
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
+import backendURL from "../auth/Settings";
 
 
 class ProfStudentHeader extends Component {
@@ -10,10 +11,10 @@ class ProfStudentHeader extends Component {
     console.log("In Student Header");
     const { profile } = this.props;
     console.log(typeof profile);
-    console.log(profile[0].email);
+    //console.log(profile[0].email);
     let imgSource = isFieldEmpty(profile[0].profile_pic)?
    "https://static.change.org/profile-img/default-user-profile.svg":
-    "http://localhost:5000" + "/downloadProfileImg/" + profile[0].profile_pic;
+    backendURL + "/downloadProfileImg/" + profile[0].profile_pic;
   
     return (
       <div className="row">

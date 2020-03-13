@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import Moment from 'react-moment';
-import {isFieldEmpty} from "../auth/HelperApis";
 
 class ProfStudentExperience extends Component {
   render() {

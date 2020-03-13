@@ -4,7 +4,6 @@ import CompanyNavbar from "../company/CompanyNavbar";
 import { getID, getUserType } from '../auth/HelperApis';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
-import swal from "sweetalert";
 
 export default class UploadImage extends Component {
     constructor(props){
@@ -32,7 +31,7 @@ export default class UploadImage extends Component {
           const formData = new FormData();
           formData.append("id", student_id);
           formData.append("file", this.state.file); //file[0]
-          await axios((user_type=='student')?
+          await axios((user_type === 'student')?
             "/updateStudentProfilePic":"/updateCompanyProfilePic", {
             method: "post",
             data: formData,
@@ -41,16 +40,6 @@ export default class UploadImage extends Component {
             console.log("Here");
             this.setState({imageUploaded:true});
           }
-            //{
-            //   setTimeout(() => {
-            //     swal({
-            //       title: "Congratulations!",
-            //       text: "Image Upload Success!",
-            //       icon: "success",
-            //       button: "OK"
-            //     });
-            //   }, 5000);
-          //}   
         )}
         
     };
@@ -65,7 +54,7 @@ export default class UploadImage extends Component {
         }
         console.log(this.state.file);
         const user_type = getUserType();
-        const navbar = (user_type == 'student')?<StudentNavbar />:<CompanyNavbar />;
+        const navbar = (user_type === 'student')?<StudentNavbar />:<CompanyNavbar />;
         if (this.state.imageUploaded) {
             // redirect to profile page
             return <Redirect to = {{ pathname: "/viewStudentProfile" }} />;

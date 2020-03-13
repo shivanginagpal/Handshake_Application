@@ -44,7 +44,7 @@ class jobPost extends Component {
         };
         console.log(newJobPost);
         axios
-        .post('http://localhost:5000/addJobPost', newJobPost)
+        .post('/addJobPost', newJobPost)
         .then(res=>{
             console.log(res.data);
             this.setState({redir:true})})
@@ -53,7 +53,7 @@ class jobPost extends Component {
 
     render() {
         let redirectVal = null;
-        if(this.state.redir == true){
+        if(this.state.redir === true){
             redirectVal = <Redirect to="/companyHome"/>;
         }
         return (

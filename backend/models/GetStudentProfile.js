@@ -121,6 +121,43 @@ var getStudentDetails = async studentId => {
       };
     }
   };
+
+  var getStudentResume = async studentId => {
+    let conn;
+    let msg;
+    let status = false;
+    let table = "applied_jobs";
+    try {
+      conn = await dbConnection();
+      if (conn) {
+
+        await conn.query("START TRANSACTION");
+        var resume_file = await conn.query("select resume_file from ?? where student_id = ?", [
+            table,
+            studentId
+          ]);
+        await conn.query("COMMIT");
+        status = true;
+        msg = "student resume fetched";
+        console.log(msg);
+      }
+    } catch (e) {
+      console.log(e);
+      msg = "error in connecting db";
+      status = false;
+    } finally {
+      if (conn) {
+        await conn.release();
+        await conn.destroy();
+      }
+      return {
+        status: status,
+        message: msg,
+        resume_file: resume_file
+      };
+    }
+  };
 module.exports = {getStudentDetails,
                   getStudentEducationDetails,
-                  getStudentExperienceDetails}
+                  getStudentExperienceDetails,
+                  getStudentResume}

@@ -2,11 +2,10 @@ import "../student/custom.css";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import StudentNavbar from "../student/StudentNavbar";
-import RegisteredEvents from "./RegisteredEvents";
 import axios from "axios";
 import Moment from 'react-moment';
 //import vieweventModal from "./vieweventModal";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { getID, getUserType} from "../auth/HelperApis";
 import swal from "sweetalert";
 

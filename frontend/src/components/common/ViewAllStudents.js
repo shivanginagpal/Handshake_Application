@@ -26,6 +26,16 @@ import "../../App.css";
     });
   }
 
+  reply_click1 = (student_id) => {
+    console.log(student_id);
+    this.props.history.push({
+      pathname: "/viewStudentResume",
+      state: {
+        student_id: student_id
+      }
+    });
+  }
+
    componentDidMount(){
        axios("/viewAllStudents",{
            method: "get"
@@ -64,14 +74,11 @@ import "../../App.css";
                    <td>
                    {<a href="#" onClick={() => this.reply_click(student.id)}> View Profile</a>}
                    </td>
-                   {/* <td>
-                     <input
-                       type="button"
-                       className="btn btn-primary btn-sm"
-                       //onClick={}
-                       value="view Profile"
-                     />
-                   </td> */}
+
+                   <td>
+                   {<a href="#" onClick={() => this.reply_click1(student.id)}> View Resume</a>}
+                   </td>
+
                  </tr>
                );
            }
@@ -90,13 +97,6 @@ import "../../App.css";
                  placeholder="Search"
                  aria-label="Search"
                />
-               {/* <button
-                 id="viewevents"
-                 className="btn btn-outline-success my-2 my-sm-0"
-                 type="submit"
-               >
-                 Search
-               </button> */}
                
              </form>
            </nav>

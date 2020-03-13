@@ -79,4 +79,22 @@ router.get("/downloadResume/:user_resume", (req, res) => {
     }
   });
 
+  router.get('/getStudentResume', async (req, res) => {
+    console.log("inside resume get request");
+    //let studentId = 1;
+    let studentId = req.query.student_id;
+    var resObj = {};
+    try{
+        resObj = await student.getStudentResume(studentId)
+    }
+    catch(e) {
+        console.log(e);
+        resObj.status = false;
+    } finally {
+        res.status(200).json({
+            ...resObj
+        });
+    } 
+});
+  
 module.exports = router;

@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import StudentNavbar from "../student/StudentNavbar";
 import axios from "axios";
 import "../../App.css";
-//import vieweventModal from "./vieweventModal";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { getID } from "../auth/HelperApis";
 
 class RegisteredEvents extends Component {
@@ -16,7 +15,6 @@ class RegisteredEvents extends Component {
       success: false,
       modal: false
     };
-    // this.showModal = this.showModal.bind(this);
     this.searchChangeHandler = this.searchChangeHandler.bind(this);
   }
   searchChangeHandler(e) {
@@ -118,30 +116,16 @@ class RegisteredEvents extends Component {
                       </div>
                     </ModalBody>
                     <ModalFooter>
-                      {/* <Button
-                        color="secondary"
-                        onClick={() => this.showModal()}
-                      >
-                        Cancel
-                      </Button> */}
+                      
                     </ModalFooter>
                   </Modal>
-                  {/* <vieweventModal
-                    // viewevent={viewevent}
-                    toggle={this.showModal}
-                    modal={this.state.modal}
-                  /> */}
+                  
                 </div>
               </div>
               <p class="card-text" id="eventtext">
                 Company Name: {viewevent.company_name}
               </p>
-              {/* <p class="card-text" id="eventtext">
-                location: {viewevent.location}
-              </p>
-              <p class="card-text" id="eventtext">
-                event_description: {viewevent.event_description}
-              </p> */}
+              
               <p class="card-text" id="eventtext">
                 eligibility: {viewevent.eligibility}
               </p>

@@ -25,6 +25,7 @@ var updateAppliedJob = require('./routes/api/jobPosts');
 var viewAllStudents = require('./routes/api/studentSearch')
 var downloadProfileImg = require('./routes/api/getStudentProfile');
 var downloadResume = require('./routes/api/getStudentProfile');
+var getStudentResume = require('./routes/api/getStudentProfile');
 
 var dbConnection = require('./models/dbConnectionPool');
 
@@ -83,6 +84,7 @@ app.use('/',updateAppliedJob);
 app.use('/',viewAllStudents);
 app.use('/',downloadProfileImg);
 app.use('/',downloadResume);
+app.use('/',getStudentResume);
 
 app.get('/',(req,res) => res.send('Hello World!!'));
 

@@ -243,7 +243,7 @@ class JobFilter extends Component {
         <div>
           <h4>Jobs</h4>
           {jobDetails}
-          {this.state.view != false ? (
+          {this.state.view !== false ? (
             // {/* MODAL CODE FOR VIEW JOB DETAILS */}
             <Modal
               isOpen={this.state.modal}
@@ -276,7 +276,7 @@ class JobFilter extends Component {
             </Modal>
           ) : // {/* END OF VIEW JOB DETAILS MODAL */}
           null}
-          {this.state.apply != false ? (
+          {this.state.apply !== false ? (
             //resume uploading
             <Modal
               isOpen={this.state.modal1}

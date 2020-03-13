@@ -41,7 +41,7 @@ class eventPost extends Component {
         };
         console.log(newEventPost);
         axios
-        .post('http://localhost:5000/addEventPost', newEventPost)
+        .post('/addEventPost', newEventPost)
         .then(res=>{
             this.setState({redir:true})
                 }
@@ -51,7 +51,7 @@ class eventPost extends Component {
 
     render() {
         let redirectVal = null;
-        if(this.state.redir == true){
+        if(this.state.redir === true){
             redirectVal = <Redirect to="/companyHome"/>;
         }
         return (

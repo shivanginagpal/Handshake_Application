@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {isFieldEmpty} from "../auth/HelperApis";
+import backendURL from "../auth/Settings";
 
 class CompanyHeader extends Component {
   render() {
@@ -8,7 +9,7 @@ class CompanyHeader extends Component {
     console.log(companyDetails[0]);
     let imgSource = isFieldEmpty(companyDetails[0].profile_pic)?
       "https://static.change.org/profile-img/default-user-profile.svg":
-      "http://localhost:5000" + "/downloadProfileImg/" + companyDetails[0].profile_pic;
+      backendURL + "/downloadProfileImg/" + companyDetails[0].profile_pic;
 
     return (
       <div className="row">

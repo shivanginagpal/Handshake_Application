@@ -1,44 +1,50 @@
 import React, { Component } from 'react';
-import { Document, Page } from "react-pdf/dist/entry.webpack";
-import "react-pdf/dist/Page/AnnotationLayer.css";
-
-//   "http://localhost:5000" + "/downloadResume/" + resume_name;
+import CompanyNavbar from "../company/CompanyNavbar";
+import axios from "axios";
+import backendURL from "../auth/Settings";
 
 export default class ViewStudentResume extends Component {
-    state = { numPages: null, pageNumber: 1 };
-
-    onDocumentLoadSuccess = ({ numPages }) => {
-      this.setState({ numPages });
+  
+    constructor() {
+      super();
+      this.state = {
+        resume:null,
+        errors: {}
     };
-  
-    goToPrevPage = () =>
-      this.setState(state => ({ pageNumber: state.pageNumber - 1 }));
-    goToNextPage = () =>
-      this.setState(state => ({ pageNumber: state.pageNumber + 1 }));
-  
-    render() {
-      const { pageNumber, numPages } = this.state;
-  
-      return (
-        <div>
-          <nav>
-            <button onClick={this.goToPrevPage}>Prev</button>
-            <button onClick={this.goToNextPage}>Next</button>
-          </nav>
-  
-          <div style={{ width: 600 }}>
-            <Document
-              file="/example.pdf"
-              onLoadSuccess={this.onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber} width={600} />
-            </Document>
-          </div>
-  
-          <p>
-            Page {pageNumber} of {numPages}
-          </p>
-        </div>
-      );
+  }
+  async componentDidMount() {
+    var student_id=null;
+    if(this.props.location.state){
+        student_id=this.props.location.state.student_id;  
     }
+
+    await axios("/getStudentResume", {
+      method: "get",
+      params: { "student_id": student_id },
+      config: { headers: { "Content-Type": "application/json" } }
+    })
+      .then(response => {
+        console.log(response);
+        console.log(response.data.resume_file[0].resume_file);
+        this.setState({
+          resume: response.data.resume_file[0].resume_file}
+          )
+        });
+  }
+  
+
+    render() {
+      console.log(this.state.resume);
+      let resume_file = null;
+      if (this.state.resume !== null){
+        resume_file = backendURL+"/downloadResume/"+this.state.resume;
+      }
+      
+    return (
+      <div>
+        <CompanyNavbar />
+        <iframe style={{width:"1000px", height:"1100px"}} src={resume_file}></iframe>
+      </div>
+    )
+  }
 }
