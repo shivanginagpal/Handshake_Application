@@ -190,7 +190,6 @@ class JobFilter extends Component {
               <p className="card-text">
                 <strong>Job Details : </strong>
                 {job.job_description}
-                {job.job_id}
               </p>
               <div className="col-10"></div>
               <button
