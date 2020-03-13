@@ -61,7 +61,7 @@ class CompanyAddedEvents extends Component {
                         <div className="col-10">{eventDetails}</div>
                     ) : (
                             <div>
-                                <h4 style={{ margin: "3em" }}>No events added, click on 'Add Event' to post an event.</h4>
+                                <h4 style={{ margin: "3em" }}>No events added, click on 'Post Event' to add an event.</h4>
                             </div>
                         )}
                 </div>

@@ -67,7 +67,7 @@ class CompanyPostedJobs extends Component {
                                 <div className="col-10">{jobDetails}</div>
                             ) : (
                                     <div>
-                                        <h4 style={{ margin: "3em" }}>No jobs added, click on 'Add Job' to post a new opening.</h4>
+                                        <h4 style={{ margin: "3em" }}>No jobs added, click on 'Post Job' to add a new job opening.</h4>
                                     </div>
                                 )}
                         </div>

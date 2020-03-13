@@ -8,7 +8,7 @@ class ProfStudentExperience extends Component {
   render() {
     console.log("In Student Experience");
     var { experience } = this.props;
-    console.log("clg name:",experience[0].company_name);
+
     //converting object to array to use the map function
     experience = Object.values(experience);
     console.log(experience);

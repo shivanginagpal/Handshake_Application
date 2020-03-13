@@ -10,8 +10,8 @@ class JobFilter extends Component {
     super();
     this.state = {
       jobs: [],
-      Keyword1: "",
-      location: "",
+      keyword: "",
+      appType: "",
       modal: false,
       modal1: false,
       file: null,
@@ -22,6 +22,11 @@ class JobFilter extends Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.searchChangeHandler = this.searchChangeHandler.bind(this);
+  }
+
+  searchChangeHandler(e) {
+    this.setState({ appType: e.target.value });
   }
 
   async componentDidMount(){
@@ -53,8 +58,8 @@ class JobFilter extends Component {
    async onSubmit(e) {
         e.preventDefault();
         const jobSearch = {
-            Keyword1: this.state.Keyword1,
-            location: this.state.location,
+            "keyword" : this.state.keyword,
+            //"location": this.state.location,
         };
         console.log(jobSearch);
     
@@ -145,6 +150,11 @@ class JobFilter extends Component {
       );
 
     let jobDetails = this.state.jobs.map(job => {
+      if (
+        job.job_category
+        .toUpperCase()
+        .includes(this.state.appType.toUpperCase())
+      ){
       return (
         <div className="col w-75" id="eventscard">
           <div className="card">
@@ -194,7 +204,7 @@ class JobFilter extends Component {
             </div>
           </div>
         </div>
-      );
+      );}
     });
 
     return (
@@ -206,22 +216,22 @@ class JobFilter extends Component {
               <input
                 type="text"
                 className="form-control mb-2"
-                name="Keyword1"
+                name="keyword"
                 placeholder="Search Employers, Jobs, Keywords.."
-                value={this.state.Keyword1}
+                value={this.state.keyword}
                 onChange={this.onChange}
               />
             </div>
-            <div className="form-group col-md-4">
-              {/* <label className="sr-only" for="inlineFormInput">Location</label> */}
-              <input
-                type="text"
-                className="form-control mb-2"
-                name="location"
-                placeholder="Location"
-                value={this.state.location}
-                onChange={this.onChange}
-              />
+            
+            <div class="form-group col-md-4">
+              <input 
+                type="text" 
+                class="form-control mb-2" 
+                    //id="appType" 
+                name = "appType"
+                value={this.state.appType} 
+                onChange={this.searchChangeHandler}
+                placeholder="Intern Full-time Part-time.."/>
             </div>
             <div className="form-group col-md-2">
               <button type="submit" className="btn btn-primary mb-2">

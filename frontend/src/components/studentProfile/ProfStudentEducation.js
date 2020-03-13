@@ -8,7 +8,7 @@ class ProfStudentEducation extends Component {
     render() {
         console.log("In Student Education");
         var { education } = this.props;
-        console.log("clg name:",education[0].college_name);
+
         //converting object to array to use the map function
         education = Object.values(education);
         const eduItems = education.map((education,i) => (

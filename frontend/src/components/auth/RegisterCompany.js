@@ -123,7 +123,7 @@ class Register extends Component {
                     className={classnames('form-control form-control-lg', {
                       'is-invalid': errors.location
                     })}
-                    placeholder="location Name"
+                    placeholder="Location Name"
                     name="location"
                     value={this.state.location}
                     onChange={this.onChange}

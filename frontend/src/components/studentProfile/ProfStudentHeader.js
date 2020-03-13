@@ -13,7 +13,7 @@ class ProfStudentHeader extends Component {
     console.log(profile[0].email);
     let imgSource = isFieldEmpty(profile[0].profile_pic)?
    "https://static.change.org/profile-img/default-user-profile.svg":
-  "http://localhost:5000" + "/downloadProfileImg/" + profile[0].profile_pic;
+    "http://localhost:5000" + "/downloadProfileImg/" + profile[0].profile_pic;
   
     return (
       <div className="row">

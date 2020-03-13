@@ -58,13 +58,13 @@ router.get('/getJobDetails',async function(req,res) {
 });
 
 router.post('/getSearchedJobDetails',async function(req,res) {
-    let {keyword, location} = req.body;
+    let {keyword} = req.body;
     console.log(req.body);
-    console.log(keyword,location);
+    console.log(keyword);
     var responseObj={};
     try{
-        responseObj=await jobPost.getSearchedJobDetails(keyword,location);
-        console.log(responseObj);
+        responseObj=await jobPost.getSearchedJobDetails(keyword);
+        //console.log(responseObj);
     }
     catch(e) {
         console.log(e);

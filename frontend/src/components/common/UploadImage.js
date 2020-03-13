@@ -24,8 +24,7 @@ export default class UploadImage extends Component {
     this.setState({ file: event.target.files[0] });
     };
 
-    uploadFile = async (e) => {
-        e.preventDefault();
+    uploadFile = async () => {
         console.log("In upload file...", this.state.file);
         const student_id = getID();
         const user_type = getUserType();
@@ -38,9 +37,8 @@ export default class UploadImage extends Component {
             method: "post",
             data: formData,
             config: { headers: { "Content-Type": "multipart/form-data" } } 
-          }).then(response => {
+          }).then(res => {
             console.log("Here");
-            console.log(response);
             this.setState({imageUploaded:true});
           }
             //{
@@ -66,7 +64,6 @@ export default class UploadImage extends Component {
             redirectVal = <Redirect to="/companyHome"/>;
         }
         console.log(this.state.file);
-        console.log(this.state.imageUploaded);
         const user_type = getUserType();
         const navbar = (user_type == 'student')?<StudentNavbar />:<CompanyNavbar />;
         if (this.state.imageUploaded) {

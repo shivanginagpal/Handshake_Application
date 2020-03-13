@@ -151,24 +151,27 @@ var getStudentDetailsForJob = async(job_id) => {
         };
     }
 }
-var getSearchedJobDetails = async(keyword,location) => {
+var getSearchedJobDetails = async(keyword) => {
     let conn;
     let message = "";
     let status = false;
     try{
         console.log("In get Searched Job Details from db");
+        console.log(keyword);
 
         conn = await dbConnection();
         if(conn){
             await conn.query("START TRANSACTION");
                 console.log("Filter jobs");
-                var jobs = await conn.query(`SELECT * FROM job_post WHERE job_description LIKE '${keyword}' OR
-                job_title LIKE '${keyword}' OR
-                job_category LIKE '${keyword}' OR
-                company_name LIKE '${keyword}' OR
-                location like '${location}'`);
+            var jobs = await conn.query(`SELECT * FROM job_post WHERE 
+                job_description LIKE '%${keyword}%' OR
+                job_title LIKE '%${keyword}%' OR
+                job_category LIKE '%${keyword}%' OR
+                company_name LIKE '%${keyword}%' OR
+                location like '%${keyword}%'`);
+
                 await conn.query("COMMIT");
-                console.log(jobs);
+                //console.log(jobs);
                 message = "Job retrieved successfully!";
                 status = true;
                 console.log(message);
