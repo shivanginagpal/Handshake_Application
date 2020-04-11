@@ -5,8 +5,8 @@ var dbConfig = {
     connectionLimit: 500,
     host      : "handshake-lab1.cnqe9jbjlpxc.us-east-2.rds.amazonaws.com",
     user      : "admin",
-    password  : "Usc1987$",
-    database  : "handshake",
+    password  : "********",
+    database  : "**handshake**",
     debug     : false,
     multipleStatements: true
 }
